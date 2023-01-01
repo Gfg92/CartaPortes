@@ -9,9 +9,10 @@ import com.example.cartaportes.db.getUserList
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Selected() {
-//    val userList = listOf<String>("Juan", "Maria")
+fun SelectedUser() {
+//    val userList = listOf("Juan", "Maria")
     val userList = getUserList()
+
 
     var selectedItem by remember {
         mutableStateOf("")
@@ -61,6 +62,7 @@ fun Selected() {
         }
     }
 }
+
 
 
 

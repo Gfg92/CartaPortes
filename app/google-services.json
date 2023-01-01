@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "516886953620",
+    "firebase_url": "https://db-porte-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "db-porte",
     "storage_bucket": "db-porte.appspot.com"
   },
