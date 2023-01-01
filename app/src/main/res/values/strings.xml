@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CartaPorte</string>
+    <string name="title_name">Carta de Porte</string>
+    <string name="title_page">¡Bienvenid@!</string>
+    <string name="content_description_truck">Camión</string>
+    <string name="text_button">Acceder</string>
+</resources>
