@@ -2,11 +2,17 @@ package com.example.cartaportes.screens.mainScreen
 
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.res.stringResource
+import com.example.cartaportes.R
+import com.example.cartaportes.db.getUserList
+
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Selected() {
-    val listItems = arrayOf("Favorites", "Options", "Settings", "Share")
+//    val userList = listOf<String>("Juan", "Maria")
+    val userList = getUserList()
+
     var selectedItem by remember {
         mutableStateOf("")
     }
@@ -22,7 +28,7 @@ fun Selected() {
         TextField(
             value = selectedItem,
             onValueChange = { selectedItem = it },
-            label = { Text(text = "Label") },
+            label = { Text(text = stringResource(id = R.string.label_usuario)) },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
                     expanded = expanded
@@ -33,7 +39,7 @@ fun Selected() {
 
         // filter options based on text field value
         val filteringOptions =
-            listItems.filter { it.contains(selectedItem, ignoreCase = true) }
+            userList.filter { it.contains(selectedItem, ignoreCase = true) }
 
         if (filteringOptions.isNotEmpty()) {
 
@@ -55,4 +61,6 @@ fun Selected() {
         }
     }
 }
+
+
 

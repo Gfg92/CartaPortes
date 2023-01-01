@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "516886953620",
+    "project_id": "db-porte",
+    "storage_bucket": "db-porte.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516886953620:android:eee7252323d1c543b4be81",
+        "android_client_info": {
+          "package_name": "com.example.cartaportes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516886953620-7ucc43kn24blssqlrpqq8s5f09futf5h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_Tk7Kqx3_VOw06tkC-RHHZNWqOc-h0ow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516886953620-7ucc43kn24blssqlrpqq8s5f09futf5h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
