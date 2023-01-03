@@ -1,26 +1,27 @@
 package com.example.cartaportes.project.screens.mainScreen
 
-import androidx.compose.foundation.layout.Arrangement
+
+import android.widget.TextView
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cartaportes.R
-import com.example.cartaportes.project.db.getUserList
+import com.example.cartaportes.project.db.DBAccess
 
 
 @Preview(showBackground = true, showSystemUi = true)
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SelectedUserUI() {
-    val userList = getUserList()
+    val dbAccess = DBAccess()
+    val userList = dbAccess.getUserList()
 
     var selectedItem by remember {
         mutableStateOf("")
@@ -57,7 +58,6 @@ fun SelectedUserUI() {
                 userList.filter { it.contains(selectedItem, ignoreCase = true) }
 
             if (filteringOptions.isNotEmpty()) {
-
                 ExposedDropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
@@ -75,12 +75,13 @@ fun SelectedUserUI() {
                 }
             }
         }
-        Divider(modifier = Modifier.padding(top = 16.dp))
+        Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
-
+        Text(text = "Hola")
     }
-
 }
+
+
 
 
 
