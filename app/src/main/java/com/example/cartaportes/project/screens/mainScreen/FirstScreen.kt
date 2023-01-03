@@ -1,13 +1,22 @@
 package com.example.cartaportes.project.screens.mainScreen
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.cartaportes.R
 import com.example.cartaportes.project.db.getUserList
 
 
-
+@Preview(showBackground = true, showSystemUi = true)
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SelectedUserUI() {
@@ -19,47 +28,58 @@ fun SelectedUserUI() {
     var expanded by remember {
         mutableStateOf(false)
     }
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = {
-            expanded = !expanded
-        }
+
+    Column(
+        modifier = Modifier.padding(16.dp)
     ) {
-        TextField(
-            value = selectedItem,
-            onValueChange = { selectedItem = it },
-            label = { Text(text = stringResource(id = R.string.label_usuario)) },
-            trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(
-                    expanded = expanded
-                )
-            },
-            colors = ExposedDropdownMenuDefaults.textFieldColors()
-        )
+        Text(text = stringResource(id = R.string.operador_transporte), fontSize = 20.sp)
 
-        // filter options based on text field value
-        val filteringOptions =
-            userList.filter { it.contains(selectedItem, ignoreCase = true) }
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = {
+                expanded = !expanded
+            }
+        ) {
+            TextField(
+                value = selectedItem,
+                onValueChange = { selectedItem = it },
+                label = { Text(text = stringResource(id = R.string.label_usuario)) },
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(
+                        expanded = expanded
+                    )
+                },
+                colors = ExposedDropdownMenuDefaults.textFieldColors()
+            )
 
-        if (filteringOptions.isNotEmpty()) {
+            // filter options based on text field value
+            val filteringOptions =
+                userList.filter { it.contains(selectedItem, ignoreCase = true) }
 
-            ExposedDropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
-            ) {
-                filteringOptions.forEach { selectionOption ->
-                    DropdownMenuItem(
-                        onClick = {
-                            selectedItem = selectionOption
-                            expanded = false
+            if (filteringOptions.isNotEmpty()) {
+
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    filteringOptions.forEach { selectionOption ->
+                        DropdownMenuItem(
+                            onClick = {
+                                selectedItem = selectionOption
+                                expanded = false
+                            }
+                        ) {
+                            Text(text = selectionOption)
                         }
-                    ) {
-                        Text(text = selectionOption)
                     }
                 }
             }
         }
+        Divider(modifier = Modifier.padding(top = 16.dp))
+
+
     }
+
 }
 
 
