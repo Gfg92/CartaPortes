@@ -9,8 +9,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 
-@Composable
-fun GetUserList(): MutableList<String> {
+
+fun getUserList(): MutableList<String> {
     val database = FirebaseDatabase.getInstance()
     val usersRef = database.getReference("Usuarios")
 
@@ -24,7 +24,6 @@ fun GetUserList(): MutableList<String> {
                 userList.add(e.toString())
             }
         }
-
         override fun onCancelled(error: DatabaseError) {
             // Handle the error
             Log.e("FirebaseDatabase", "Error reading data", error.toException())

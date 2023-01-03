@@ -4,14 +4,14 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import com.example.cartaportes.R
-import com.example.cartaportes.project.db.GetUserList
+import com.example.cartaportes.project.db.getUserList
 
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SelectedUserUI() {
-    val userList = GetUserList()
+    val userList = getUserList()
 
     var selectedItem by remember {
         mutableStateOf("")
