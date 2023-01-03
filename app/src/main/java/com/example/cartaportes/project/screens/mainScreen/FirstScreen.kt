@@ -3,8 +3,6 @@ package com.example.cartaportes.project.screens.mainScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -22,9 +20,9 @@ import com.example.cartaportes.project.db.DBAccess
 fun SelectedUserUI() {
     val dbAccess = DBAccess()
     val userList = dbAccess.getUserList()
-    val descriptList = dbAccess.getResidenceDni()
 
-    var selectedItem by remember {
+
+    var selectedName by remember {
         mutableStateOf("")
     }
     var expanded by remember {
@@ -43,8 +41,8 @@ fun SelectedUserUI() {
             }
         ) {
             TextField(
-                value = selectedItem,
-                onValueChange = { selectedItem = it },
+                value = selectedName,
+                onValueChange = { selectedName = it },
                 label = { Text(text = stringResource(id = R.string.label_usuario)) },
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(
@@ -56,7 +54,7 @@ fun SelectedUserUI() {
 
             // filter options based on text field value
             val filteringOptions =
-                userList.filter { it.contains(selectedItem, ignoreCase = true) }
+                userList.filter { it.contains(selectedName, ignoreCase = true) }
 
             if (filteringOptions.isNotEmpty()) {
                 ExposedDropdownMenu(
@@ -66,7 +64,7 @@ fun SelectedUserUI() {
                     filteringOptions.forEach { selectionOption ->
                         DropdownMenuItem(
                             onClick = {
-                                selectedItem = selectionOption
+                                selectedName = selectionOption
                                 expanded = false
                             }
                         ) {
@@ -78,9 +76,7 @@ fun SelectedUserUI() {
         }
         Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
-        for (e in descriptList){
-            Text(text = e)
-        }
+        Text(text = selectedName)
     }
 }
 
