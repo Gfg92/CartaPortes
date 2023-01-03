@@ -1,18 +1,17 @@
-package com.example.cartaportes.screens.mainScreen
+package com.example.cartaportes.project.screens.mainScreen
 
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import com.example.cartaportes.R
-import com.example.cartaportes.db.getUserList
+import com.example.cartaportes.project.db.GetUserList
+
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SelectedUser() {
-//    val userList = listOf("Juan", "Maria")
-    val userList = getUserList()
-
+fun SelectedUserUI() {
+    val userList = GetUserList()
 
     var selectedItem by remember {
         mutableStateOf("")

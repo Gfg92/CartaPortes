@@ -1,4 +1,4 @@
-package com.example.cartaportes.screens.login
+package com.example.cartaportes.project.screens.login
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

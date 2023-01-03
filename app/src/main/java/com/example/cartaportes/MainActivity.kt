@@ -1,15 +1,13 @@
 package com.example.cartaportes
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import com.example.cartaportes.db.getUserList
-import com.example.cartaportes.navigation.NavigationScreen
+import com.example.cartaportes.project.navigation.NavigationScreen
 import com.example.cartaportes.ui.theme.CartaPortesTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,11 +20,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    for (e in getUserList()) {
-                        Log.i("Hola", e)
-                    }
                     NavigationScreen()
-
                 }
             }
         }
