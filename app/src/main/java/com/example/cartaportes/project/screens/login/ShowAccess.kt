@@ -26,7 +26,6 @@ import androidx.navigation.NavController
 import com.example.cartaportes.R
 
 
-
 @Composable
 fun Login(navController: NavController) {
     Scaffold(
@@ -35,9 +34,10 @@ fun Login(navController: NavController) {
             TopAppBar {
                 Text(
                     text = stringResource(id = R.string.title_name),
-                    fontFamily = FontFamily(Font(R.font.gangitem)),
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.ExtraBold
+                    fontFamily = FontFamily(Font(R.font.highspeed)),
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    modifier = Modifier.padding(start = 16.dp)
                 )
             }
         }
