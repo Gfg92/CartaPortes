@@ -1,6 +1,5 @@
 package com.example.cartaportes.project.screens.mainScreen
 
-
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -11,15 +10,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cartaportes.R
-import com.example.cartaportes.project.db.DBAccess
+import com.example.cartaportes.project.db.getNameAddressDniList
+import com.example.cartaportes.project.db.getUserList
 
 
 @Preview(showBackground = true, showSystemUi = true)
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SelectedUserUI() {
-    val dbAccess = DBAccess()
-    val userList = dbAccess.getUserList()
+
+    val userList = getUserList()
 
     var selectedName by remember {
         mutableStateOf("")
@@ -78,9 +78,27 @@ fun SelectedUserUI() {
         }
         Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
-        Text(text = "El nombre es: $selectedName\nEl DNI es: ")
+
+        val name = selectedName
+
+        val list = remember {
+            getNameAddressDniList()
+        }
+        var dni = ""
+        var address = ""
+        for (e in list) {
+            if (name == e.name){
+                dni = e.dni
+                address = e.address
+            }
+        }
+
+        Text(text = "El nombre es: $name\nEl DNI es: $dni\nLa dirección es: $address")
+
     }
 }
+
+
 
 
 
