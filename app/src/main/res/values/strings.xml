@@ -8,4 +8,6 @@
     <!--First Screen-->
     <string name="operador_transporte">Operador de transporte</string>
     <string name="label_usuario">Nombre</string>
+    <string name="consignatario">Consignatario</string>
+    <string name="label_consignatario">Nombre</string>
 </resources>
