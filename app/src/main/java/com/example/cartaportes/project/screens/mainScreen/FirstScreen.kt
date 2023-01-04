@@ -21,10 +21,10 @@ fun SelectedUserUI() {
     val dbAccess = DBAccess()
     val userList = dbAccess.getUserList()
 
-
     var selectedName by remember {
         mutableStateOf("")
     }
+
     var expanded by remember {
         mutableStateOf(false)
     }
@@ -56,6 +56,7 @@ fun SelectedUserUI() {
             val filteringOptions =
                 userList.filter { it.contains(selectedName, ignoreCase = true) }
 
+
             if (filteringOptions.isNotEmpty()) {
                 ExposedDropdownMenu(
                     expanded = expanded,
@@ -73,10 +74,11 @@ fun SelectedUserUI() {
                     }
                 }
             }
+
         }
         Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
-        Text(text = selectedName)
+        Text(text = "El nombre es: $selectedName\nEl DNI es: ")
     }
 }
 

@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">CartaPorte</string>
+    <!--Login-->
     <string name="title_name">Carta de Porte</string>
     <string name="title_page">¡Bienvenid@!</string>
     <string name="content_description_truck">Camión</string>
     <string name="text_button">Acceder</string>
-
+    <!--First Screen-->
     <string name="operador_transporte">Operador de transporte</string>
     <string name="label_usuario">Usuario</string>
 </resources>
