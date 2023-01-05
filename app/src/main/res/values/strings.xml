@@ -10,4 +10,5 @@
     <string name="label_usuario">Nombre</string>
     <string name="consignatario">Consignatario</string>
     <string name="label_consignatario">Nombre</string>
+    <string name="fab_siguiente">Siguiente</string>
 </resources>
