@@ -1,5 +1,7 @@
 package com.example.cartaportes.project.screens.myScreen
 
+import android.widget.TextView
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -7,19 +9,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.cartaportes.R
-import com.example.cartaportes.project.db.getConsigList
-import com.example.cartaportes.project.db.getNameConsigList
-import com.example.cartaportes.project.db.getUserList
-import com.example.cartaportes.project.db.getNameList
-
+import com.example.cartaportes.project.db.dbAccessFirstScreen.getConsigList
+import com.example.cartaportes.project.db.dbAccessFirstScreen.getNameConsigList
+import com.example.cartaportes.project.db.dbAccessFirstScreen.getUserList
+import com.example.cartaportes.project.db.dbAccessFirstScreen.getNameList
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -78,16 +79,26 @@ fun FirstScreen(navigate: NavController) {
             address1 = e.address
         }
     }
-
     // FAB
+    val context = LocalContext.current
+
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                navigate.navigate("secondScreen")
+                if (selectedName == "" || selectedNameConsig == "") {
+                    Toast.makeText(
+                        context,
+                        R.string.toast_error,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    navigate.navigate("secondScreen")
+                }
             }) {
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowRight,
-                    contentDescription = stringResource(id = R.string.fab_siguiente)
+                    contentDescription = stringResource(id = R.string.fab_next)
                 )
             }
         }, floatingActionButtonPosition = FabPosition.End
@@ -101,7 +112,7 @@ fun FirstScreen(navigate: NavController) {
                 fontSize = 15.sp,
                 fontFamily = FontFamily(
                     Font(R.font.highspeed)
-                )
+                ), modifier = Modifier.padding(top = 16.dp)
             )
 
             ExposedDropdownMenuBox(
@@ -146,9 +157,13 @@ fun FirstScreen(navigate: NavController) {
                 }
 
             }
-            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
-            Text(text = "El nombre es: $name\nEl DNI es: $dni\nLa dirección es: $address\nEl país es: $country")
+            Text(
+                text = "El nombre es: $name\nEl DNI es: $dni\nLa dirección es: $address\nEl país es: $country",
+                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+            )
+
+            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
 
             Text(
@@ -202,9 +217,11 @@ fun FirstScreen(navigate: NavController) {
                 }
 
             }
-            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
-            Text(text = "El nombre es: $nameConsig\nEl DNI es: $dni1\nLa dirección es: $address1")
+            Text(
+                text = "El nombre es: $nameConsig\nEl DNI es: $dni1\nLa dirección es: $address1",
+                modifier = Modifier.padding(top = 16.dp)
+            )
 
         }
     }

@@ -10,5 +10,21 @@
     <string name="label_usuario">Nombre</string>
     <string name="consignatario">Consignatario</string>
     <string name="label_consignatario">Nombre</string>
-    <string name="fab_siguiente">Siguiente</string>
+    <string name="fab_next">Siguiente</string>
+    <string name="fab_back">Atrás</string>
+    <!--Second Screen-->
+    <string name="delivery">Lugar de entrega</string>
+    <string name="picking">Lugar de recogida</string>
+    <string name="label_delivery">Introduce el lugar</string>
+    <string name="label_picking">Introduce el lugar</string>
+    <string name="number_packages">Número de bultos</string>
+    <string name="amount">Cantidad</string>
+    <string name="check_title">Tipo de embalage</string>
+    <string name="check_primario">Primario</string>
+    <string name="check_secundario">Secundario</string>
+    <string name="check_terciario">Terciario</string>
+
+    <!--Toast-->
+    <string name="toast_error">Debes completar todos los campos</string>
+
 </resources>
