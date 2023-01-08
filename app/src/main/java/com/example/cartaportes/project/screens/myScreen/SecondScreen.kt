@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -79,6 +80,7 @@ fun SecondScreen(navigate: NavController) {
     val context = LocalContext.current
 
     Scaffold(
+        backgroundColor = Color.LightGray,
         floatingActionButton = {
             Row() {
                 FloatingActionButton(

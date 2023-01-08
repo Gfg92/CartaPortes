@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -84,6 +85,7 @@ fun FirstScreen(navigate: NavController) {
 
 
     Scaffold(
+        backgroundColor = Color.LightGray,
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 if (selectedName == "" || selectedNameConsig == "") {
@@ -159,7 +161,7 @@ fun FirstScreen(navigate: NavController) {
             }
 
             Text(
-                text = "El nombre es: $name\nEl DNI es: $dni\nLa dirección es: $address\nEl país es: $country",
+                text = "Nombre: $name\nDNI: $dni\nDirección: $address\nPaís: $country",
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
             )
 
@@ -219,7 +221,7 @@ fun FirstScreen(navigate: NavController) {
             }
 
             Text(
-                text = "El nombre es: $nameConsig\nEl DNI es: $dni1\nLa dirección es: $address1",
+                text = "Nombre: $nameConsig\nDNI: $dni1\nDirección: $address1",
                 modifier = Modifier.padding(top = 16.dp)
             )
 
