@@ -41,8 +41,6 @@ fun ThirdScreen(navigate: NavController) {
         mutableStateOf("")
     }
 
-
-
     // FAB
     val context = LocalContext.current
 
@@ -61,7 +59,7 @@ fun ThirdScreen(navigate: NavController) {
                     )
                 }
                 FloatingActionButton(onClick = {
-                    if (false) {
+                    if (weightPackages == "") {
                         Toast.makeText(
                             context,
                             R.string.toast_error,
@@ -144,7 +142,6 @@ fun ThirdScreen(navigate: NavController) {
                 text = "Peso: $weightPackages kgs",
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
             )
-
 
 
 

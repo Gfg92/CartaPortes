@@ -36,6 +36,27 @@
     <string name="check_dimensional">Dimensionales</string>
     <string name="check_dimensional_descrip">Por su gran tamaño requieren de un almacenaje y manipulación especial.</string>
     <string name="total_weight">Peso total</string>
+    <!--Fouth Screen-->
+    <string name="senders_instructions">Instrucciones del remitente</string>
+    <string name="pick_image">Selecciona una imagen</string>
+    <string name="push_image">Subir imagen</string>
+    <string name="particular_stipulations">LAS PARTES INTERVINIENTES EN ESTE CONTRATO SE SOMENTEN EXPRESAMENTE A LA JUNTA ARBITRAL DEL TRANSPORTE DE ESTA PROVINCIA, INCLUSO EN CONTROVERSIAS QUE EXCEDAN DE 3.000 €</string>
+    <!--Fifth Screen-->
+    <string name="method_of_payment">Método de pago</string>
+    <string name="payer">Introduce pagador</string>
+    <string name="way_of_payment">Forma de pago</string>
+    <string name="due">Porte debido</string>
+    <string name="paid">Porte pagado</string>
+    <string name="reimbursement">Reembolso</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="total_price">Precio total</string>
+    <string name="price">Precio</string>
+
+
+
+
+
 
     <!--Toast-->
     <string name="toast_error">Debes completar todos los campos</string>
