@@ -58,6 +58,7 @@
     <string name="date_of_issue">Fecha de emisión</string>
     <string name="open_date_picker">Selecciona una fecha</string>
     <string name="sign">Introduce la firma</string>
+    <string name="sign_clear">Limpiar</string>
     <string name="sign_send">Enviar</string>
 
 

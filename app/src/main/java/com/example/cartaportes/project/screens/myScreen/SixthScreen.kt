@@ -133,7 +133,6 @@ fun SixthScreen(navigate: NavController) {
                             else -> false
                         }
                     }) {
-
                 var primera = true
                 var iniciox = 0f
                 var inicioy = 0f
@@ -150,19 +149,29 @@ fun SixthScreen(navigate: NavController) {
                                 color = punto.color,
                                 start = Offset(x = iniciox, y = inicioy),
                                 end = Offset(x = punto.x, y = punto.y),
-                                strokeWidth = 12f
+                                strokeWidth = 10f
                             )
                             iniciox = punto.x
                             inicioy = punto.y
                         }
                 }
+
             }
 
-            Button(onClick = {
-
-            }) {
-                Text(text = stringResource(id = R.string.sign_send))
+            Row() {
+                Button(onClick = {
+                    //TODO
+                }) {
+                    Text(text = stringResource(id = R.string.sign_clear))
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Button(onClick = {
+                    //TODO
+                }) {
+                    Text(text = stringResource(id = R.string.sign_send))
+                }
             }
+
 
 
         }
