@@ -21,7 +21,6 @@ import com.example.cartaportes.project.db.dbAccessFirstScreen.getConsigList
 import com.example.cartaportes.project.db.dbAccessFirstScreen.getNameConsigList
 import com.example.cartaportes.project.db.dbAccessFirstScreen.getUserList
 import com.example.cartaportes.project.db.dbAccessFirstScreen.getNameList
-import java.io.FileWriter
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -80,6 +79,7 @@ fun FirstScreen(navigate: NavController) {
             address1 = e.address
         }
     }
+
     // FAB
     val context = LocalContext.current
 
@@ -139,7 +139,6 @@ fun FirstScreen(navigate: NavController) {
                 val filteringOptions =
                     userList.filter { it.contains(selectedName, ignoreCase = true) }
 
-
                 if (filteringOptions.isNotEmpty()) {
                     ExposedDropdownMenu(
                         expanded = expanded,
@@ -157,7 +156,6 @@ fun FirstScreen(navigate: NavController) {
                         }
                     }
                 }
-
             }
 
             Text(
@@ -165,8 +163,8 @@ fun FirstScreen(navigate: NavController) {
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
             )
 
-            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
+            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
             Text(
                 text = stringResource(id = R.string.consignee),
@@ -229,11 +227,20 @@ fun FirstScreen(navigate: NavController) {
     }
 }
 
-fun writeTxt(name: String, dni: String, address: String, country: String) {
-    val f_out = FileWriter("dataFile.txt")
-    f_out.append("Operador de transporte:\nNombre: $name\nDNI: $dni\nDirección: $address\nPaís: $country")
-    f_out.close()
-}
+data class Operator(
+    var name: String? = null,
+    var dni: String? = null,
+    var address: String? = null,
+    var country: String? = null
+)
+
+data class Consignee(
+    var name: String? = null,
+    var dni: String? = null,
+    var address: String? = null,
+)
+
+
 
 
 

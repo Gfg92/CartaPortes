@@ -64,15 +64,7 @@ fun FouthScreen(navigate: NavController) {
                     )
                 }
                 FloatingActionButton(onClick = {
-                    if (imageUri == null) {
-                        Toast.makeText(
-                            context,
-                            R.string.toast_error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        navigate.navigate("fifthScreen")
-                    }
+                    navigate.navigate("fifthScreen")
                 }) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowRight,

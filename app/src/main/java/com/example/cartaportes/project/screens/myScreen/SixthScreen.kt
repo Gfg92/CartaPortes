@@ -111,31 +111,22 @@ fun SixthScreen(navigate: NavController) {
                 ),
                 modifier = Modifier.padding(top = 16.dp)
             )
-//            var canvasX = 0.dp
-//            var canvasY = 0.dp
+
             Canvas(
                 modifier = Modifier
-//                    .onGloballyPositioned { coordinates ->
-//                        canvasX = coordinates.positionInParent().x.dp
-//                        canvasY = coordinates.positionInParent().y.dp
-//                    }
                     .size(width = 400.dp, height = 200.dp)
                     .border(BorderStroke(1.dp, Color.Black))
                     .pointerInteropFilter {
                         when (it.actionMasked) {
                             MotionEvent.ACTION_UP -> {
-                                //if (it.x.dp > canvasX && it.x.dp < canvasX + 400.dp && it.y.dp > canvasY && it.y.dp < canvasY + 200.dp)
-//                                if (it.x.dp > canvasX  && it.y.dp > canvasY - 560.dp && it.y.dp < canvasY-20.dp)
                                 puntos.add(Punto(-1f, -1f, colorSeleccionado))
                                 true
                             }
                             MotionEvent.ACTION_MOVE -> {
-//                                if (it.x.dp > canvasX  && it.y.dp > canvasY - 560.dp && it.y.dp < canvasY-20.dp)
                                 puntos.add(Punto(it.x, it.y, colorSeleccionado))
                                 true
                             }
                             MotionEvent.ACTION_DOWN -> {
-//                                if (it.x.dp > canvasX  && it.y.dp > canvasY - 560.dp && it.y.dp < canvasY-20.dp)
                                 puntos.add(Punto(it.x, it.y, colorSeleccionado))
                                 true
                             }
@@ -173,7 +164,7 @@ fun SixthScreen(navigate: NavController) {
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Button(onClick = {
-                    //TODO
+                    navigate.navigate("seventhScreen")
                 }) {
                     Text(text = stringResource(id = R.string.sign_send))
                 }

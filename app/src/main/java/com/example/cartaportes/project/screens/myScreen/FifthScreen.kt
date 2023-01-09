@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
-import com.example.cartaportes.project.db.AccessFifthScreen.getPayerList
-import com.example.cartaportes.project.db.AccessFifthScreen.getVehicleList
+import com.example.cartaportes.project.db.dbAccessFifthScreen.getPayerList
+import com.example.cartaportes.project.db.dbAccessFifthScreen.getVehicleList
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

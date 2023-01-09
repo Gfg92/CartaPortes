@@ -1,7 +1,5 @@
 package com.example.cartaportes.project.navigation
 
-
-
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
@@ -15,7 +13,7 @@ import com.example.cartaportes.project.screens.myScreen.*
 @Composable
 fun NavigationScreen(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "sixthScreen") {
+    NavHost(navController = navController, startDestination = "login") {
         composable("login") { Login(navController) }
         composable("firstScreen") { FirstScreen(navController) }
         composable("secondScreen") { SecondScreen(navController) }
@@ -23,5 +21,6 @@ fun NavigationScreen(){
         composable("fourthScreen") { FouthScreen(navController) }
         composable("fifthScreen") { FifthScreen(navController) }
         composable("sixthScreen") { SixthScreen(navController) }
+        composable("seventhScreen") { SeventhScreen(navController) }
     }
 }
