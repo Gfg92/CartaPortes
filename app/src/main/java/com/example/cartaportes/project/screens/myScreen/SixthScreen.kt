@@ -19,6 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -87,15 +91,11 @@ fun SixthScreen(navigate: NavController) {
                 ),
                 modifier = Modifier.padding(top = 16.dp)
             )
-
-            // Creating a button that on
-            // click displays/shows the DatePickerDialog
             Button(onClick = {
                 mDatePickerDialog.show()
             }) {
                 Text(text = stringResource(id = R.string.open_date_picker), color = Color.White)
             }
-            // Displaying the mDate value in the Text
             Text(
                 text = "Fecha seleccionada: ${mDate.value}",
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
@@ -111,22 +111,31 @@ fun SixthScreen(navigate: NavController) {
                 ),
                 modifier = Modifier.padding(top = 16.dp)
             )
-
+//            var canvasX = 0.dp
+//            var canvasY = 0.dp
             Canvas(
                 modifier = Modifier
+//                    .onGloballyPositioned { coordinates ->
+//                        canvasX = coordinates.positionInParent().x.dp
+//                        canvasY = coordinates.positionInParent().y.dp
+//                    }
                     .size(width = 400.dp, height = 200.dp)
                     .border(BorderStroke(1.dp, Color.Black))
                     .pointerInteropFilter {
                         when (it.actionMasked) {
                             MotionEvent.ACTION_UP -> {
+                                //if (it.x.dp > canvasX && it.x.dp < canvasX + 400.dp && it.y.dp > canvasY && it.y.dp < canvasY + 200.dp)
+//                                if (it.x.dp > canvasX  && it.y.dp > canvasY - 560.dp && it.y.dp < canvasY-20.dp)
                                 puntos.add(Punto(-1f, -1f, colorSeleccionado))
                                 true
                             }
                             MotionEvent.ACTION_MOVE -> {
+//                                if (it.x.dp > canvasX  && it.y.dp > canvasY - 560.dp && it.y.dp < canvasY-20.dp)
                                 puntos.add(Punto(it.x, it.y, colorSeleccionado))
                                 true
                             }
                             MotionEvent.ACTION_DOWN -> {
+//                                if (it.x.dp > canvasX  && it.y.dp > canvasY - 560.dp && it.y.dp < canvasY-20.dp)
                                 puntos.add(Punto(it.x, it.y, colorSeleccionado))
                                 true
                             }
