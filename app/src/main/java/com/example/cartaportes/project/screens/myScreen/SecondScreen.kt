@@ -270,15 +270,15 @@ fun SecondScreen(navigate: NavController) {
                 Checkbox(
                     checked = checkedPrimary.value,
                     onCheckedChange = { checkedPrimary.value = it })
-                Text(text = stringResource(id = R.string.check_primario))
+                Text(text = stringResource(id = R.string.check_primary))
                 Checkbox(
                     checked = checkedSecondary.value,
                     onCheckedChange = { checkedSecondary.value = it })
-                Text(text = stringResource(id = R.string.check_secundario))
+                Text(text = stringResource(id = R.string.check_secondary))
                 Checkbox(
                     checked = checkedTertiary.value,
                     onCheckedChange = { checkedTertiary.value = it })
-                Text(text = stringResource(id = R.string.check_terciario))
+                Text(text = stringResource(id = R.string.check_tertiary))
             }
 
 

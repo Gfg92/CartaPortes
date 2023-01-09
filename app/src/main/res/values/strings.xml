@@ -6,10 +6,10 @@
     <string name="content_description_truck">Camión</string>
     <string name="text_button">Acceder</string>
     <!--First Screen-->
-    <string name="operador_transporte">Operador de transporte</string>
-    <string name="label_usuario">Nombre</string>
-    <string name="consignatario">Consignatario</string>
-    <string name="label_consignatario">Nombre</string>
+    <string name="transport_operator">Operador de transporte</string>
+    <string name="label_user">Nombre</string>
+    <string name="consignee">Consignatario</string>
+    <string name="label_consignee">Nombre</string>
     <string name="fab_next">Siguiente</string>
     <string name="fab_back">Atrás</string>
     <!--Second Screen-->
@@ -20,9 +20,9 @@
     <string name="number_packages">Número de bultos</string>
     <string name="amount">Cantidad</string>
     <string name="check_title">Tipo de embalage</string>
-    <string name="check_primario">Primario</string>
-    <string name="check_secundario">Secundario</string>
-    <string name="check_terciario">Terciario</string>
+    <string name="check_primary">Primario</string>
+    <string name="check_secondary">Secundario</string>
+    <string name="check_tertiary">Terciario</string>
     <!--Third Screen-->
     <string name="check_nature_title">Tipo de naturaleza</string>
     <string name="check_perishable">Perecededas</string>

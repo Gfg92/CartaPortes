@@ -109,7 +109,7 @@ fun FirstScreen(navigate: NavController) {
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.operador_transporte),
+                text = stringResource(id = R.string.transport_operator),
                 fontSize = 15.sp,
                 fontFamily = FontFamily(
                     Font(R.font.highspeed)
@@ -125,7 +125,7 @@ fun FirstScreen(navigate: NavController) {
                 TextField(
                     value = selectedName,
                     onValueChange = { selectedName = it },
-                    label = { Text(text = stringResource(id = R.string.label_usuario)) },
+                    label = { Text(text = stringResource(id = R.string.label_user)) },
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(
                             expanded = expanded
@@ -168,7 +168,7 @@ fun FirstScreen(navigate: NavController) {
 
 
             Text(
-                text = stringResource(id = R.string.consignatario),
+                text = stringResource(id = R.string.consignee),
                 fontSize = 15.sp,
                 fontFamily = FontFamily(
                     Font(R.font.highspeed)
@@ -185,7 +185,7 @@ fun FirstScreen(navigate: NavController) {
                 TextField(
                     value = selectedNameConsig,
                     onValueChange = { selectedNameConsig = it },
-                    label = { Text(text = stringResource(id = R.string.label_consignatario)) },
+                    label = { Text(text = stringResource(id = R.string.label_consignee)) },
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(
                             expanded = expanded1

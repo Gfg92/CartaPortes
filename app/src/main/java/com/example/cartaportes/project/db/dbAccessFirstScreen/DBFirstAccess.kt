@@ -7,7 +7,7 @@ import com.google.firebase.database.*
 
 fun getNameList(): MutableList<String> {
     val database = FirebaseDatabase.getInstance()
-    val usersRef = database.getReference("Usuarios")
+    val usersRef = database.getReference("Users")
     val userList = mutableListOf<String>()
 
     usersRef.addChildEventListener(object : ChildEventListener {
@@ -34,7 +34,7 @@ fun getNameList(): MutableList<String> {
 
 fun getUserList(): MutableList<User> {
     val database = FirebaseDatabase.getInstance()
-    val usersRef = database.getReference("Usuarios")
+    val usersRef = database.getReference("Users")
     val usersList = mutableListOf<User>()
 
     usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -59,7 +59,7 @@ fun getUserList(): MutableList<User> {
 
 fun getNameConsigList(): MutableList<String> {
     val database = FirebaseDatabase.getInstance()
-    val usersRef = database.getReference("Consignatario")
+    val usersRef = database.getReference("Consignee")
     val userList = mutableListOf<String>()
 
     usersRef.addChildEventListener(object : ChildEventListener {
@@ -88,7 +88,7 @@ fun getNameConsigList(): MutableList<String> {
 
 fun getConsigList(): MutableList<Consignee> {
     val database = FirebaseDatabase.getInstance()
-    val usersRef = database.getReference("Consignatario")
+    val usersRef = database.getReference("Consignee")
     val consigList = mutableListOf<Consignee>()
 
     usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
