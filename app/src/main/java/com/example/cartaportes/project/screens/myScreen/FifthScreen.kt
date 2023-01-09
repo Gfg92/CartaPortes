@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
 import com.example.cartaportes.project.db.AccessFifthScreen.getPayerList
+import com.example.cartaportes.project.db.AccessFifthScreen.getVehicleList
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -39,6 +40,16 @@ fun FifthScreen(navigate: NavController) {
         mutableStateOf(false)
     }
     val namePayment = selectedpayer
+
+    // Vehicle
+    val vehicleList = getVehicleList()
+    var selectedVehicle by remember {
+        mutableStateOf("")
+    }
+    var expanded1 by remember {
+        mutableStateOf(false)
+    }
+    val nameVehicle = selectedVehicle
 
 
     // CheckBox
@@ -61,8 +72,6 @@ fun FifthScreen(navigate: NavController) {
     if (checkedNo.value == true) {
         checkedYes.value == false
     }
-
-
 
     // FAB
     val context = LocalContext.current
@@ -236,6 +245,66 @@ fun FifthScreen(navigate: NavController) {
                     onCheckedChange = { checkedNo.value = it })
                 Text(text = stringResource(id = R.string.no))
             }
+
+            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
+
+            // Vehicle
+            Text(
+                text = stringResource(id = R.string.vehicle),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+
+            ExposedDropdownMenuBox(
+                expanded = expanded1,
+                onExpandedChange = {
+                    expanded1 = !expanded1
+                }
+            ) {
+                TextField(
+                    value = selectedVehicle,
+                    onValueChange = { selectedVehicle = it },
+                    label = { Text(text = stringResource(id = R.string.registration_number)) },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(
+                            expanded = expanded1
+                        )
+                    },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors()
+                )
+
+                // filter options based on text field value
+                val filteringOptions =
+                    vehicleList.filter { it.contains(selectedVehicle, ignoreCase = true) }
+
+
+                if (filteringOptions.isNotEmpty()) {
+                    ExposedDropdownMenu(
+                        expanded = expanded1,
+                        onDismissRequest = { expanded1 = false }
+                    ) {
+                        filteringOptions.forEach { selectionOption ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    selectedVehicle = selectionOption
+                                    expanded1 = false
+                                }
+                            ) {
+                                Text(text = selectionOption)
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            Text(
+                text = "Matrícula: $nameVehicle",
+                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+            )
 
 
 

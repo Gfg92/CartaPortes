@@ -52,7 +52,11 @@
     <string name="no">No</string>
     <string name="total_price">Precio total</string>
     <string name="price">Precio</string>
-
+    <string name="vehicle">Matrícula del Vehículo</string>
+    <string name="registration_number">Matrícula</string>
+    <!--Sixth Screen-->
+    <string name="date_of_issue">Fecha de emisión</string>
+    <string name="open_date_picker">Selecciona una fecha</string>
 
 
 

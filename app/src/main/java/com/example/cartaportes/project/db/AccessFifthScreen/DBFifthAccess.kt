@@ -24,3 +24,23 @@ fun getPayerList(): MutableList<String> {
 
     return payerList
 }
+
+fun getVehicleList(): MutableList<String>{
+    val database = FirebaseDatabase.getInstance()
+    val myRef = database.getReference("Vehicle")
+
+    val vehicleList = mutableListOf<String>()
+
+    myRef.addValueEventListener(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (vehicle in dataSnapshot.children) {
+                vehicleList.add(vehicle.getValue(String::class.java)!!)
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+        }
+    })
+
+    return vehicleList
+}
