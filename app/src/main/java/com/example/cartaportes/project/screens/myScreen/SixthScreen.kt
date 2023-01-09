@@ -58,7 +58,7 @@ fun SixthScreen(navigate: NavController) {
 
     // Sign
     val puntos = remember { mutableStateListOf<Punto>() }
-    var colorSeleccionado by remember { mutableStateOf(Color.Black) }
+    val colorSeleccionado by remember { mutableStateOf(Color.Black) }
 
     Scaffold(
         backgroundColor = Color.LightGray,
@@ -155,12 +155,10 @@ fun SixthScreen(navigate: NavController) {
                             inicioy = punto.y
                         }
                 }
-
             }
-
             Row() {
                 Button(onClick = {
-                    //TODO
+
                 }) {
                     Text(text = stringResource(id = R.string.sign_clear))
                 }
@@ -171,9 +169,6 @@ fun SixthScreen(navigate: NavController) {
                     Text(text = stringResource(id = R.string.sign_send))
                 }
             }
-
-
-
         }
     }
 }

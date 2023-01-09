@@ -21,6 +21,7 @@ import com.example.cartaportes.project.db.dbAccessFirstScreen.getConsigList
 import com.example.cartaportes.project.db.dbAccessFirstScreen.getNameConsigList
 import com.example.cartaportes.project.db.dbAccessFirstScreen.getUserList
 import com.example.cartaportes.project.db.dbAccessFirstScreen.getNameList
+import java.io.FileWriter
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -226,8 +227,14 @@ fun FirstScreen(navigate: NavController) {
 
         }
     }
-
 }
+
+fun writeTxt(name: String, dni: String, address: String, country: String) {
+    val f_out = FileWriter("dataFile.txt")
+    f_out.append("Operador de transporte:\nNombre: $name\nDNI: $dni\nDirección: $address\nPaís: $country")
+    f_out.close()
+}
+
 
 
 
