@@ -1,6 +1,5 @@
 package com.example.cartaportes.project.screens.myScreen
 
-import android.widget.TextView
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
