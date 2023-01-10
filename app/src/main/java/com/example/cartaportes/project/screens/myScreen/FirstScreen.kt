@@ -17,10 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
-import com.example.cartaportes.project.db.dbAccessFirstScreen.getConsigList
-import com.example.cartaportes.project.db.dbAccessFirstScreen.getNameConsigList
-import com.example.cartaportes.project.db.dbAccessFirstScreen.getUserList
-import com.example.cartaportes.project.db.dbAccessFirstScreen.getNameList
+import com.example.cartaportes.project.db.dbAccessFirstScreen.*
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -43,6 +40,7 @@ fun FirstScreen(navigate: NavController) {
     val list = remember {
         getUserList()
     }
+
     var dni = ""
     var address = ""
     var country = ""
@@ -85,7 +83,7 @@ fun FirstScreen(navigate: NavController) {
 
 
     Scaffold(
-        backgroundColor = Color.LightGray,
+        backgroundColor = Color(155, 154, 255),
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 if (selectedName == "" || selectedNameConsig == "") {
@@ -95,7 +93,8 @@ fun FirstScreen(navigate: NavController) {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    navigate.navigate("secondScreen")
+                    writeOperatorFirebase(name, dni, address, country)
+                    navigate.navigate("seventhScreen")
                 }
             }) {
                 Icon(
@@ -123,7 +122,7 @@ fun FirstScreen(navigate: NavController) {
                     expanded = !expanded
                 }
             ) {
-                TextField(
+                OutlinedTextField(
                     value = selectedName,
                     onValueChange = { selectedName = it },
                     label = { Text(text = stringResource(id = R.string.label_user)) },
@@ -181,7 +180,7 @@ fun FirstScreen(navigate: NavController) {
                     expanded1 = !expanded1
                 }
             ) {
-                TextField(
+                OutlinedTextField(
                     value = selectedNameConsig,
                     onValueChange = { selectedNameConsig = it },
                     label = { Text(text = stringResource(id = R.string.label_consignee)) },
@@ -227,18 +226,6 @@ fun FirstScreen(navigate: NavController) {
     }
 }
 
-data class Operator(
-    var name: String? = null,
-    var dni: String? = null,
-    var address: String? = null,
-    var country: String? = null
-)
-
-data class Consignee(
-    var name: String? = null,
-    var dni: String? = null,
-    var address: String? = null,
-)
 
 
 

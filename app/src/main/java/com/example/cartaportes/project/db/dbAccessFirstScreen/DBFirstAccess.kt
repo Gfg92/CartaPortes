@@ -110,6 +110,11 @@ fun getConsigList(): MutableList<Consignee> {
     return consigList
 }
 
+fun writeOperatorFirebase(name: String, dni: String, address: String,country: String){
+    val database = FirebaseDatabase.getInstance()
+    val ref = database.getReference("Write")
+    ref.setValue("$name $dni $address $country")
+}
 
 
 

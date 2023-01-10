@@ -29,7 +29,7 @@ import com.example.cartaportes.R
 @Composable
 fun Login(navController: NavController) {
     Scaffold(
-        backgroundColor = Color.LightGray,
+        backgroundColor = Color(155, 154, 255),
         topBar = {
             TopAppBar {
                 Text(

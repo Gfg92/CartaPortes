@@ -45,7 +45,7 @@ fun ThirdScreen(navigate: NavController) {
     val context = LocalContext.current
 
     Scaffold(
-        backgroundColor = Color.LightGray,
+        backgroundColor = Color(155, 154, 255),
         floatingActionButton = {
             Row() {
                 FloatingActionButton(
@@ -131,7 +131,7 @@ fun ThirdScreen(navigate: NavController) {
                 ),
                 modifier = Modifier.padding(top = 16.dp)
             )
-            TextField(
+            OutlinedTextField(
                 value = weightPackages,
                 onValueChange = { weightPackages = it },
                 label = { Text(stringResource(id = R.string.amount)) },

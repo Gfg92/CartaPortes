@@ -65,7 +65,7 @@ fun SixthScreen(navigate: NavController) {
     val colorSeleccionado by remember { mutableStateOf(Color.Black) }
 
     Scaffold(
-        backgroundColor = Color.LightGray,
+        backgroundColor = Color(155, 154, 255),
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {

@@ -77,7 +77,7 @@ fun FifthScreen(navigate: NavController) {
     val context = LocalContext.current
 
     Scaffold(
-        backgroundColor = Color.LightGray,
+        backgroundColor = Color(155, 154, 255),
         floatingActionButton = {
             Row() {
                 FloatingActionButton(
@@ -133,7 +133,7 @@ fun FifthScreen(navigate: NavController) {
                     expanded = !expanded
                 }
             ) {
-                TextField(
+                OutlinedTextField(
                     value = selectedpayer,
                     onValueChange = { selectedpayer = it },
                     label = { Text(text = stringResource(id = R.string.payer)) },
@@ -210,7 +210,7 @@ fun FifthScreen(navigate: NavController) {
                     ),
                     modifier = Modifier.padding(top = 16.dp)
                 )
-                TextField(
+                OutlinedTextField(
                     value = price,
                     onValueChange = { price = it },
                     label = { Text(stringResource(id = R.string.price)) },
@@ -264,7 +264,7 @@ fun FifthScreen(navigate: NavController) {
                     expanded1 = !expanded1
                 }
             ) {
-                TextField(
+                OutlinedTextField(
                     value = selectedVehicle,
                     onValueChange = { selectedVehicle = it },
                     label = { Text(text = stringResource(id = R.string.registration_number)) },

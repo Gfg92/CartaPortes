@@ -80,7 +80,7 @@ fun SecondScreen(navigate: NavController) {
     val context = LocalContext.current
 
     Scaffold(
-        backgroundColor = Color.LightGray,
+        backgroundColor = Color(155, 154, 255),
         floatingActionButton = {
             Row() {
                 FloatingActionButton(
@@ -130,7 +130,7 @@ fun SecondScreen(navigate: NavController) {
                     expanded = !expanded
                 }
             ) {
-                TextField(
+                OutlinedTextField(
                     value = selectedPlaceDelivery,
                     onValueChange = { selectedPlaceDelivery = it },
                     label = { Text(text = stringResource(id = R.string.label_delivery)) },
@@ -189,7 +189,7 @@ fun SecondScreen(navigate: NavController) {
                     expanded1 = !expanded1
                 }
             ) {
-                TextField(
+                OutlinedTextField(
                     value = selectedPlacePicking,
                     onValueChange = { selectedPlacePicking = it },
                     label = { Text(text = stringResource(id = R.string.label_picking)) },
@@ -242,7 +242,7 @@ fun SecondScreen(navigate: NavController) {
                 ),
                 modifier = Modifier.padding(top = 16.dp)
             )
-            TextField(
+            OutlinedTextField(
                 value = numberPackages,
                 onValueChange = { numberPackages = it },
                 label = { Text(stringResource(id = R.string.amount)) },

@@ -50,7 +50,7 @@ fun FouthScreen(navigate: NavController) {
     }
 
     Scaffold(
-        backgroundColor = Color.LightGray,
+        backgroundColor = Color(155, 154, 255),
         floatingActionButton = {
             Row() {
                 FloatingActionButton(
