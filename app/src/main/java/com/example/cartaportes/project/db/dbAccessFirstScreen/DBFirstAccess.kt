@@ -1,7 +1,7 @@
 package com.example.cartaportes.project.db.dbAccessFirstScreen
 
-import com.example.cartaportes.project.db.dbAccessFirstScreen.classes.Consignee
-import com.example.cartaportes.project.db.dbAccessFirstScreen.classes.User
+import com.example.cartaportes.project.db.classes.Consignee
+import com.example.cartaportes.project.db.classes.User
 import com.google.firebase.database.*
 
 

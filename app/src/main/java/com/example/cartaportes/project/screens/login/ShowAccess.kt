@@ -29,7 +29,7 @@ import com.example.cartaportes.R
 @Composable
 fun Login(navController: NavController) {
     Scaffold(
-        backgroundColor = Color(155, 154, 255),
+        backgroundColor = Color(167, 181, 216, 255),
         topBar = {
             TopAppBar {
                 Text(
@@ -37,7 +37,8 @@ fun Login(navController: NavController) {
                     fontFamily = FontFamily(Font(R.font.highspeed)),
                     fontSize = 25.sp,
                     fontWeight = FontWeight.ExtraBold,
-                    modifier = Modifier.padding(start = 16.dp)
+                    modifier = Modifier.padding(start = 16.dp),
+                    color = Color.White
                 )
             }
         }
@@ -52,7 +53,7 @@ fun Login(navController: NavController) {
                 fontSize = 30.sp,
                 fontFamily = FontFamily(Font(R.font.highspeed)),
                 letterSpacing = 1.sp,
-                modifier = Modifier.padding(bottom = 50.dp)
+                modifier = Modifier.padding(bottom = 50.dp), color = Color.White
             )
             Image(
                 painter = painterResource(id = R.drawable.camion),
@@ -69,6 +70,7 @@ fun Login(navController: NavController) {
             }, modifier = Modifier.padding(top = 50.dp)) {
                 Text(
                     text = stringResource(id = R.string.text_button),
+                    color = Color.White,
                     fontFamily = FontFamily(Font(R.font.highspeed)),
                     fontSize = 20.sp
                 )

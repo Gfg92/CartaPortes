@@ -46,9 +46,9 @@ fun FirstScreen(navigate: NavController) {
     var country = ""
     for (e in list) {
         if (name == e.name) {
-            dni = e.dni
-            address = e.address
-            country = e.country
+            dni = e.dni!!
+            address = e.address!!
+            country = e.country!!
         }
     }
 
@@ -73,8 +73,8 @@ fun FirstScreen(navigate: NavController) {
     var address1 = ""
     for (e in list1) {
         if (nameConsig == e.name) {
-            dni1 = e.dni
-            address1 = e.address
+            dni1 = e.dni!!
+            address1 = e.address!!
         }
     }
 
@@ -83,7 +83,7 @@ fun FirstScreen(navigate: NavController) {
 
 
     Scaffold(
-        backgroundColor = Color(155, 154, 255),
+        backgroundColor = Color(167, 181, 216, 255),
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 if (selectedName == "" || selectedNameConsig == "") {

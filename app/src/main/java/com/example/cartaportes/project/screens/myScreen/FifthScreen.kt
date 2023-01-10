@@ -87,7 +87,7 @@ fun FifthScreen(navigate: NavController) {
     val context = LocalContext.current
 
     Scaffold(
-        backgroundColor = Color(155, 154, 255),
+        backgroundColor = Color(167, 181, 216, 255),
         floatingActionButton = {
             Row() {
                 FloatingActionButton(

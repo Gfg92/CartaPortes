@@ -30,7 +30,7 @@ import androidx.navigation.NavController
 import com.example.cartaportes.R
 import com.example.cartaportes.project.db.dbAccessSixthScreen.setDate
 import com.example.cartaportes.project.db.dbAccessSixthScreen.setSign
-import com.example.cartaportes.project.screens.classes.Punto
+import com.example.cartaportes.project.screens.classes.Point
 import java.util.Date
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -60,11 +60,11 @@ fun SixthScreen(navigate: NavController) {
     )
 
     // Sign
-    val puntos = remember { mutableStateListOf<Punto>() }
-    val colorSeleccionado by remember { mutableStateOf(Color.Black) }
+    val points = remember { mutableStateListOf<Point>() }
+    val selectedColor by remember { mutableStateOf(Color.Black) }
 
     Scaffold(
-        backgroundColor = Color(155, 154, 255),
+        backgroundColor = Color(167, 181, 216, 255),
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -120,61 +120,61 @@ fun SixthScreen(navigate: NavController) {
                     .pointerInteropFilter {
                         when (it.actionMasked) {
                             MotionEvent.ACTION_UP -> {
-                                puntos.add(Punto(-1f, -1f, colorSeleccionado))
+                                points.add(Point(-1f, -1f, selectedColor))
                                 true
                             }
                             MotionEvent.ACTION_MOVE -> {
-                                puntos.add(Punto(it.x, it.y, colorSeleccionado))
+                                points.add(Point(it.x, it.y, selectedColor))
                                 true
                             }
                             MotionEvent.ACTION_DOWN -> {
-                                puntos.add(Punto(it.x, it.y, colorSeleccionado))
+                                points.add(Point(it.x, it.y, selectedColor))
                                 true
                             }
                             else -> false
                         }
                     }) {
-                var primera = true
-                var iniciox = 0f
-                var inicioy = 0f
-                for (punto in puntos) {
+                var first = true
+                var startx = 0f
+                var starty = 0f
+                for (dot in points) {
                     if (
-                        punto.x > this.size.width ||
-                        punto.y > this.size.height ||
-                        punto.x < 0 ||
-                        punto.y < 0
+                        dot.x > this.size.width ||
+                        dot.y > this.size.height ||
+                        dot.x < 0 ||
+                        dot.y < 0
                     ) {
                         continue
                     }
-                    if (punto.x == -1f && punto.y == -1f) {
-                        primera = true
+                    if (dot.x == -1f && dot.y == -1f) {
+                        first = true
                     } else
-                        if (primera) {
-                            iniciox = punto.x
-                            inicioy = punto.y
-                            primera = false
+                        if (first) {
+                            startx = dot.x
+                            starty = dot.y
+                            first = false
                         } else {
                             drawLine(
-                                color = punto.color,
-                                start = Offset(x = iniciox, y = inicioy),
-                                end = Offset(x = punto.x, y = punto.y),
+                                color = dot.color,
+                                start = Offset(x = startx, y = starty),
+                                end = Offset(x = dot.x, y = dot.y),
                                 strokeWidth = 10f
                             )
-                            iniciox = punto.x
-                            inicioy = punto.y
+                            startx = dot.x
+                            starty = dot.y
                         }
                 }
             }
             Row() {
                 Button(onClick = {
-                    puntos.clear()
+                    points.clear()
                 }) {
                     Text(text = stringResource(id = R.string.sign_clear), color = Color.White)
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Button(onClick = {
                     setDate(mDate.value)
-                    setSign(puntos)
+                    setSign(points)
                     navigate.navigate("seventhScreen")
                 }) {
                     Text(text = stringResource(id = R.string.sign_send), color = Color.White)
