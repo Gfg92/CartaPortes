@@ -24,17 +24,35 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
+import com.example.cartaportes.project.db.dbAccessThirdScreen.setNatureKind
+import com.example.cartaportes.project.db.dbAccessThirdScreen.setTotalWeight
 
 
 @Composable
 fun ThirdScreen(navigate: NavController) {
 
     // CheckBox
+    val kindList = mutableListOf<String>()
     val checkedPerishable = remember { mutableStateOf(false) }
     val checkedNotPerishable = remember { mutableStateOf(false) }
     val checkedFragile = remember { mutableStateOf(false) }
     val checkedDangerous = remember { mutableStateOf(false) }
     val checkedDimensional = remember { mutableStateOf(false) }
+    if (checkedPerishable.value == true) {
+        kindList.add(stringResource(id = R.string.check_perishable))
+    }
+    if (checkedNotPerishable.value == true) {
+        kindList.add(stringResource(id = R.string.check_not_perishable))
+    }
+    if (checkedFragile.value == true) {
+        kindList.add(stringResource(id = R.string.check_fragile))
+    }
+    if (checkedDangerous.value == true) {
+        kindList.add(stringResource(id = R.string.check_dangerous))
+    }
+    if (checkedDimensional.value == true) {
+        kindList.add(stringResource(id = R.string.check_dimensional))
+    }
 
     //Weight packages
     var weightPackages by remember {
@@ -66,6 +84,8 @@ fun ThirdScreen(navigate: NavController) {
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
+                        setNatureKind(kindList)
+                        setTotalWeight(weightPackages)
                         navigate.navigate("fourthScreen")
                     }
                 }) {
@@ -142,7 +162,6 @@ fun ThirdScreen(navigate: NavController) {
                 text = "Peso: $weightPackages kgs",
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
             )
-
 
 
         }
