@@ -93,8 +93,8 @@ fun FirstScreen(navigate: NavController) {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    writeOperatorFirebase(name, dni, address, country)
-                    writeConsigneeFirebase(nameConsig, dni1, address1)
+                    setOperator(name, dni, address, country)
+                    setConsignee(nameConsig, dni1, address1)
                     navigate.navigate("secondScreen")
                 }
             }) {

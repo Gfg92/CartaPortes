@@ -40,3 +40,28 @@ fun getPickingPlaces(): MutableList<String> {
     })
     return  pickingCompanies
 }
+
+fun setDelivery(delivery: String) {
+    val database = FirebaseDatabase.getInstance()
+    val refName = database.getReference("Response")
+    val refWrite = refName.child("WriteDelivery")
+    refWrite.child("delivery").setValue(delivery)
+}
+fun setPicking(picking: String) {
+    val database = FirebaseDatabase.getInstance()
+    val refName = database.getReference("Response")
+    val refWrite = refName.child("WritePicking")
+    refWrite.child("picking").setValue(picking)
+}
+fun setPackageNumber(number:String){
+    val database = FirebaseDatabase.getInstance()
+    val refName = database.getReference("Response")
+    val refWrite = refName.child("WritePackage")
+    refWrite.child("packageNumber").setValue(number)
+}
+fun setPacking(type: String){
+    val database = FirebaseDatabase.getInstance()
+    val refName = database.getReference("Response")
+    val refWrite = refName.child("WritePacking")
+    refWrite.child("packaging").setValue(type)
+}

@@ -57,15 +57,7 @@ fun getUserList(): MutableList<User> {
     return usersList
 }
 
-fun writeOperatorFirebase(name: String, dni: String, address: String, country: String) {
-    val database = FirebaseDatabase.getInstance()
-    val refName = database.getReference("Response")
-    val refWriteOper = refName.child("WriteNameOperator")
-    refWriteOper.child("name").setValue(name)
-    refWriteOper.child("dni").setValue(dni)
-    refWriteOper.child("address").setValue(address)
-    refWriteOper.child("country").setValue(country)
-}
+
 
 
 fun getNameConsigList(): MutableList<String> {
@@ -119,13 +111,23 @@ fun getConsigList(): MutableList<Consignee> {
     return consigList
 }
 
-fun writeConsigneeFirebase(name: String, dni: String, address: String) {
+fun setOperator(name: String, dni: String, address: String, country: String) {
     val database = FirebaseDatabase.getInstance()
     val refName = database.getReference("Response")
-    val refWriteOper = refName.child("WriteNameConsignee")
-    refWriteOper.child("name").setValue(name)
-    refWriteOper.child("dni").setValue(dni)
-    refWriteOper.child("address").setValue(address)
+    val refWrite = refName.child("WriteNameOperator")
+    refWrite.child("name").setValue(name)
+    refWrite.child("dni").setValue(dni)
+    refWrite.child("address").setValue(address)
+    refWrite.child("country").setValue(country)
+}
+
+fun setConsignee(name: String, dni: String, address: String) {
+    val database = FirebaseDatabase.getInstance()
+    val refName = database.getReference("Response")
+    val refWrite = refName.child("WriteNameConsignee")
+    refWrite.child("name").setValue(name)
+    refWrite.child("dni").setValue(dni)
+    refWrite.child("address").setValue(address)
 }
 
 

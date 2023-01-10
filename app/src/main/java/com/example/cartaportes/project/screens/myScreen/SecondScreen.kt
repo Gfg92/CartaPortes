@@ -25,8 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
-import com.example.cartaportes.project.db.dbAccessSecondScreen.getDeliveryPlaces
-import com.example.cartaportes.project.db.dbAccessSecondScreen.getPickingPlaces
+import com.example.cartaportes.project.db.dbAccessSecondScreen.*
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -60,18 +59,22 @@ fun SecondScreen(navigate: NavController) {
     }
 
     // CheckBox
+    var picking = ""
     val checkedPrimary = remember { mutableStateOf(false) }
     val checkedSecondary = remember { mutableStateOf(false) }
     val checkedTertiary = remember { mutableStateOf(false) }
     if (checkedPrimary.value == true) {
+        picking = stringResource(id = R.string.check_primary)
         checkedSecondary.value = false
         checkedTertiary.value = false
     }
     if (checkedSecondary.value == true) {
+        picking = stringResource(id = R.string.check_secondary)
         checkedPrimary.value = false
         checkedTertiary.value = false
     }
     if (checkedTertiary.value == true) {
+        picking = stringResource(id = R.string.check_tertiary)
         checkedPrimary.value = false
         checkedSecondary.value = false
     }
@@ -101,6 +104,10 @@ fun SecondScreen(navigate: NavController) {
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
+                        setDelivery(namePlaceDel)
+                        setPicking(namePlacePick)
+                        setPackageNumber(numberPackages)
+                        setPacking(picking)
                         navigate.navigate("thirdScreen")
                     }
                 }) {
