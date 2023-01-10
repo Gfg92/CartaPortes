@@ -24,8 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
-import com.example.cartaportes.project.db.dbAccessFifthScreen.getPayerList
-import com.example.cartaportes.project.db.dbAccessFifthScreen.getVehicleList
+import com.example.cartaportes.project.db.dbAccessFifthScreen.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -41,6 +40,39 @@ fun FifthScreen(navigate: NavController) {
     }
     val namePayment = selectedpayer
 
+
+    // CheckBox
+    var paidValue = ""
+    val checkedPaid = remember { mutableStateOf(false) }
+    val checkedDue = remember { mutableStateOf(false) }
+    if (checkedPaid.value == true) {
+        paidValue = stringResource(id = R.string.paid)
+        checkedDue.value = false
+    }
+    if (checkedDue.value == true) {
+        paidValue = stringResource(id = R.string.due)
+        checkedPaid.value = false
+    }
+
+    // Price
+    var price by remember {
+        mutableStateOf("")
+    }
+
+    // CheckBox2
+    var refund = ""
+    val checkedYes = remember { mutableStateOf(false) }
+    val checkedNo = remember { mutableStateOf(false) }
+    if (checkedYes.value == true) {
+        refund = stringResource(id = R.string.yes)
+        checkedNo.value = false
+    }
+    if (checkedNo.value == true) {
+        refund = stringResource(id = R.string.no)
+        checkedYes.value == false
+    }
+
+
     // Vehicle
     val vehicleList = getVehicleList()
     var selectedVehicle by remember {
@@ -50,28 +82,6 @@ fun FifthScreen(navigate: NavController) {
         mutableStateOf(false)
     }
     val nameVehicle = selectedVehicle
-
-
-    // CheckBox
-    val checkedPaid = remember { mutableStateOf(false) }
-    val checkedDue = remember { mutableStateOf(false) }
-    if (checkedPaid.value == true) {
-        checkedDue.value = false
-    }
-    if (checkedDue.value == true) {
-        checkedPaid.value = false
-    }
-
-
-    // CheckBox2
-    val checkedYes = remember { mutableStateOf(false) }
-    val checkedNo = remember { mutableStateOf(false) }
-    if (checkedYes.value == true) {
-        checkedNo.value = false
-    }
-    if (checkedNo.value == true) {
-        checkedYes.value == false
-    }
 
     // FAB
     val context = LocalContext.current
@@ -104,6 +114,10 @@ fun FifthScreen(navigate: NavController) {
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
+                        setPayment(namePayment)
+                        setPaymentWay(paidValue, price)
+                        setRefund(refund)
+                        setLicensePlate(nameVehicle)
                         navigate.navigate("sixthScreen")
                     }
                 }) {
@@ -198,10 +212,6 @@ fun FifthScreen(navigate: NavController) {
                 Text(text = stringResource(id = R.string.due))
             }
             if (checkedDue.value == true){
-                var price by remember {
-                    mutableStateOf("")
-                }
-                // Price
                 Text(
                     text = stringResource(id = R.string.total_price),
                     fontSize = 15.sp,

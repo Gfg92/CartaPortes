@@ -8,6 +8,7 @@ import android.widget.DatePicker
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
+import com.example.cartaportes.project.db.dbAccessSixthScreen.setDate
 import com.example.cartaportes.project.screens.classes.Punto
 import java.util.Date
 
@@ -116,6 +118,7 @@ fun SixthScreen(navigate: NavController) {
                 modifier = Modifier
                     .size(width = 400.dp, height = 200.dp)
                     .border(BorderStroke(1.dp, Color.Black))
+                    .background(Color.White)
                     .pointerInteropFilter {
                         when (it.actionMasked) {
                             MotionEvent.ACTION_UP -> {
@@ -164,6 +167,7 @@ fun SixthScreen(navigate: NavController) {
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Button(onClick = {
+                    setDate(mDate.value)
                     navigate.navigate("seventhScreen")
                 }) {
                     Text(text = stringResource(id = R.string.sign_send))

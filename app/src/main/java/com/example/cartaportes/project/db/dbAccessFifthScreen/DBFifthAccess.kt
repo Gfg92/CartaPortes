@@ -25,7 +25,7 @@ fun getPayerList(): MutableList<String> {
     return payerList
 }
 
-fun getVehicleList(): MutableList<String>{
+fun getVehicleList(): MutableList<String> {
     val database = FirebaseDatabase.getInstance()
     val myRef = database.getReference("Vehicle")
 
@@ -41,6 +41,35 @@ fun getVehicleList(): MutableList<String>{
         override fun onCancelled(error: DatabaseError) {
         }
     })
-
     return vehicleList
+}
+
+fun setPayment(pay: String) {
+    val database = FirebaseDatabase.getInstance()
+    val refName = database.getReference("Response")
+    val refWrite = refName.child("WritePayment")
+    refWrite.child("payment").setValue(pay)
+}
+
+fun setPaymentWay(kind: String, price: String? = null) {
+    val database = FirebaseDatabase.getInstance()
+    val refName = database.getReference("Response")
+    val refWrite = refName.child("WriteKindPayment")
+    refWrite.child("kind").setValue(kind)
+    val refWrite2 = refName.child("WritePrice")
+    refWrite2.child("price").setValue(price)
+}
+
+fun setRefund(refund: String) {
+    val database = FirebaseDatabase.getInstance()
+    val refName = database.getReference("Response")
+    val refWrite = refName.child("WriteRefund")
+    refWrite.child("refund").setValue(refund)
+}
+
+fun setLicensePlate(license: String) {
+    val database = FirebaseDatabase.getInstance()
+    val refName = database.getReference("Response")
+    val refWrite = refName.child("WriteLicense")
+    refWrite.child("licensePlate").setValue(license)
 }
