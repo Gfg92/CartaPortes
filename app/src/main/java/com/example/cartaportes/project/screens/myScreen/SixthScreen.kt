@@ -141,6 +141,14 @@ fun SixthScreen(navigate: NavController) {
                 var iniciox = 0f
                 var inicioy = 0f
                 for (punto in puntos) {
+                    if (
+                        punto.x > this.size.width ||
+                        punto.y > this.size.height ||
+                        punto.x < 0 ||
+                        punto.y < 0
+                    ) {
+                        continue
+                    }
                     if (punto.x == -1f && punto.y == -1f) {
                         primera = true
                     } else
