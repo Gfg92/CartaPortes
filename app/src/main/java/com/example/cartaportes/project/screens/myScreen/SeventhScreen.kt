@@ -12,13 +12,17 @@ import com.example.cartaportes.project.db.dbAccessSeventhScreen.getOperatorData
 
 @Composable
 fun SeventhScreen(navigate: NavController) {
+    var nombre = ""
+    for ( e in getOperatorData()){
+        nombre = e.name!!
+    }
     Scaffold(
         backgroundColor = Color(167, 181, 216, 255),
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(text = getOperatorData())
+            Text(text = nombre)
         }
     }
 }
