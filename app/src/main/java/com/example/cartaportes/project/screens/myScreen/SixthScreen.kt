@@ -20,10 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInteropFilter
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInParent
-import androidx.compose.ui.layout.positionInRoot
-import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -33,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
 import com.example.cartaportes.project.db.dbAccessSixthScreen.setDate
+import com.example.cartaportes.project.db.dbAccessSixthScreen.setSign
 import com.example.cartaportes.project.screens.classes.Punto
 import java.util.Date
 
@@ -172,14 +169,15 @@ fun SixthScreen(navigate: NavController) {
                 Button(onClick = {
                     puntos.clear()
                 }) {
-                    Text(text = stringResource(id = R.string.sign_clear))
+                    Text(text = stringResource(id = R.string.sign_clear), color = Color.White)
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Button(onClick = {
                     setDate(mDate.value)
+                    setSign(puntos)
                     navigate.navigate("seventhScreen")
                 }) {
-                    Text(text = stringResource(id = R.string.sign_send))
+                    Text(text = stringResource(id = R.string.sign_send), color = Color.White)
                 }
             }
         }

@@ -90,7 +90,7 @@ fun FouthScreen(navigate: NavController) {
             Button(onClick = {
                 launcher.launch("image/*")
             }) {
-                Text(text = stringResource(id = R.string.pick_image))
+                Text(text = stringResource(id = R.string.pick_image), color = Color.White)
             }
 
             Spacer(modifier = Modifier.height(12.dp))
