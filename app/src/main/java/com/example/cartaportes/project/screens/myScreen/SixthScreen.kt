@@ -114,6 +114,7 @@ fun SixthScreen(navigate: NavController) {
                 modifier = Modifier.padding(top = 16.dp)
             )
 
+
             Canvas(
                 modifier = Modifier
                     .size(width = 400.dp, height = 200.dp)
@@ -161,7 +162,7 @@ fun SixthScreen(navigate: NavController) {
             }
             Row() {
                 Button(onClick = {
-
+                    puntos.clear()
                 }) {
                     Text(text = stringResource(id = R.string.sign_clear))
                 }
