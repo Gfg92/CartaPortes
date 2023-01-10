@@ -23,7 +23,7 @@ import com.example.cartaportes.project.db.dbAccessFirstScreen.*
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FirstScreen(navigate: NavController) {
-    // Operador de transporte
+    // Driver operator
 
     val userList = getNameList()
 
@@ -52,7 +52,7 @@ fun FirstScreen(navigate: NavController) {
         }
     }
 
-    // Consignatario
+    // Consignee
 
     val consigList = getNameConsigList()
 
@@ -94,7 +94,8 @@ fun FirstScreen(navigate: NavController) {
                     ).show()
                 } else {
                     writeOperatorFirebase(name, dni, address, country)
-                    navigate.navigate("seventhScreen")
+                    writeConsigneeFirebase(nameConsig, dni1, address1)
+                    navigate.navigate("secondScreen")
                 }
             }) {
                 Icon(
