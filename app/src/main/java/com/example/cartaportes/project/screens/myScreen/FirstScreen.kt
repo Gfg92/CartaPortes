@@ -95,7 +95,7 @@ fun FirstScreen(navigate: NavController) {
                 } else {
                     setOperator(name, dni, address, country)
                     setConsignee(nameConsig, dni1, address1)
-                    navigate.navigate("seventhScreen")
+                    navigate.navigate("secondScreen")
                 }
             }) {
                 Icon(

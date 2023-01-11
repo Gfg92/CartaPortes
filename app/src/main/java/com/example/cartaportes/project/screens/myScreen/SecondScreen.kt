@@ -108,7 +108,7 @@ fun SecondScreen(navigate: NavController) {
                         setPicking(namePlacePick)
                         setPackageNumber(numberPackages)
                         setPacking(picking)
-                        navigate.navigate("thirdScreen")
+                        navigate.navigate("seventhScreen")
                     }
                 }) {
                     Icon(
