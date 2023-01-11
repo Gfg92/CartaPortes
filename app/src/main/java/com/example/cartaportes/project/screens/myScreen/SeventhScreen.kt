@@ -1,6 +1,8 @@
 package com.example.cartaportes.project.screens.myScreen
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.layout.*
@@ -12,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -19,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
+import com.example.cartaportes.project.db.dbAccessFourthScreen.getImageFromFirebase
 import com.example.cartaportes.project.db.dbAccessSeventhScreen.*
 
 
@@ -30,7 +34,9 @@ fun SeventhScreen(navigate: NavController) {
         backgroundColor = Color(167, 181, 216, 255),
     ) {
         Column(
-            modifier = Modifier.padding(16.dp).verticalScroll(state = rememberScrollState(0))
+            modifier = Modifier
+                .padding(16.dp)
+                .verticalScroll(state = rememberScrollState(0))
         ) {
             val name = remember {
                 mutableStateOf("")
@@ -259,6 +265,11 @@ fun SeventhScreen(navigate: NavController) {
                 modifier = Modifier.padding(top = 16.dp)
             )
             Text(text = "${date.value}")
+
+
+
+
+
         }
     }
 }

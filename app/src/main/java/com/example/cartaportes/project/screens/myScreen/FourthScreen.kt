@@ -5,7 +5,6 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -24,11 +23,11 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
+import com.example.cartaportes.project.db.dbAccessFourthScreen.setBitmapToFirebase
 
 
 @Composable
@@ -64,6 +63,7 @@ fun FouthScreen(navigate: NavController) {
                     )
                 }
                 FloatingActionButton(onClick = {
+                    setBitmapToFirebase(bitmap.value!!)
                     navigate.navigate("fifthScreen")
                 }) {
                     Icon(
