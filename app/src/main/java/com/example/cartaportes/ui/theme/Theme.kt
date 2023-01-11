@@ -32,9 +32,9 @@ fun CartaPortesTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
     val colors = if (darkTheme) {
 //        DarkColorPalette
         LightColorPalette
+
     } else {
         LightColorPalette
-//        DarkColorPalette
     }
 
     MaterialTheme(
