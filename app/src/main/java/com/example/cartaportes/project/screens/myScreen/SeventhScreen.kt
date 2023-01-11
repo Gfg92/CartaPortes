@@ -1,6 +1,8 @@
 package com.example.cartaportes.project.screens.myScreen
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -26,10 +28,9 @@ fun SeventhScreen(navigate: NavController) {
 
     Scaffold(
         backgroundColor = Color(167, 181, 216, 255),
-        modifier = Modifier.verticalScroll(state = rememberScrollState(0))
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp).verticalScroll(state = rememberScrollState(0))
         ) {
             val name = remember {
                 mutableStateOf("")
