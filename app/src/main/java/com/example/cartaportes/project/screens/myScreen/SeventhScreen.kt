@@ -140,6 +140,124 @@ fun SeventhScreen(navigate: NavController) {
             )
             Text(text = "Tipo: ${packaging.value}")
 
+
+            Text(
+                text = stringResource(id = R.string.check_nature_title),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            val lista = remember {
+                getPackageKind()
+            }
+            for (e in lista) {
+                Text(text = e)
+            }
+
+
+            val weight = remember {
+                mutableStateOf("")
+            }
+            getTotalWeight { weight.value = it }
+            Text(
+                text = stringResource(id = R.string.total_weight),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            Text(text = "Peso: ${weight.value} kgs")
+
+
+            val payment = remember {
+                mutableStateOf("")
+            }
+            getPayment { payment.value = it }
+            Text(
+                text = stringResource(id = R.string.method_of_payment),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            Text(text = "Pagador: ${payment.value}")
+
+            val kind = remember {
+                mutableStateOf("")
+            }
+            getPaymentKind { kind.value = it }
+
+            Text(
+                text = stringResource(id = R.string.way_of_payment),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            Text(text = "${kind.value}")
+
+
+            val price = remember {
+                mutableStateOf("")
+            }
+            getPrice { price.value = it }
+            Text(
+                text = stringResource(id = R.string.total_price),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            Text(text = "Precio: ${price.value}€")
+
+
+            val refund = remember {
+                mutableStateOf("")
+            }
+            getRefund { refund.value = it }
+            Text(
+                text = stringResource(id = R.string.reimbursement),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                )
+            )
+            Text(text = "${refund.value}")
+
+            val license = remember {
+                mutableStateOf("")
+            }
+            getLicense { license.value = it }
+            Text(
+                text = stringResource(id = R.string.vehicle),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            Text(text = "Matrícula: ${license.value}")
+
+
+            val date = remember {
+                mutableStateOf("")
+            }
+            getDate { date.value = it }
+            Text(
+                text = stringResource(id = R.string.date_of_issue),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            Text(text = "${date.value}")
         }
     }
 }

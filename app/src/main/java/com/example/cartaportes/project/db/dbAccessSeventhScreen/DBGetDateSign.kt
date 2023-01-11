@@ -7,6 +7,22 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
+fun getDate(callback: (String) -> Unit){
+    val ref = FirebaseDatabase.getInstance().getReference("Response/WriteDate")
+    ref.addListenerForSingleValueEvent(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val date = dataSnapshot.child("date").getValue(String::class.java) ?: ""
+            callback(date)
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            // Handle errors here
+        }
+    })
+}
+
+
+
 // SIGN
 fun getSign(callback: (SnapshotStateList<Point>) -> Unit) {
     val ref = FirebaseDatabase.getInstance().getReference("Response/WriteSign")

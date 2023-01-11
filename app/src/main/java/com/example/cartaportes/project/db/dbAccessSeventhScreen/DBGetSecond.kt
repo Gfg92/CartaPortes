@@ -17,6 +17,7 @@ fun getDelivery(callback: (String) -> Unit) {
         }
     })
 }
+
 fun getPicking(callback: (String) -> Unit) {
     val ref = FirebaseDatabase.getInstance().getReference("Response/WritePicking")
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -29,6 +30,7 @@ fun getPicking(callback: (String) -> Unit) {
         }
     })
 }
+
 fun getPackage(callback: (String) -> Unit){
     val ref = FirebaseDatabase.getInstance().getReference("Response/WritePackage")
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -41,6 +43,7 @@ fun getPackage(callback: (String) -> Unit){
         }
     })
 }
+
 fun getPacking(callback: (String) -> Unit){
     val ref = FirebaseDatabase.getInstance().getReference("Response/WritePacking")
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
