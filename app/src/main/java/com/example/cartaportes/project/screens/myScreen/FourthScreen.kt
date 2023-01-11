@@ -63,8 +63,12 @@ fun FouthScreen(navigate: NavController) {
                     )
                 }
                 FloatingActionButton(onClick = {
-                    setBitmapToFirebase(bitmap.value!!)
-                    navigate.navigate("fifthScreen")
+                    if (bitmap.value == null){
+                        navigate.navigate("fifthScreen")
+                    }else{
+                        setBitmapToFirebase(bitmap.value!!)
+                        navigate.navigate("fifthScreen")
+                    }
                 }) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowRight,

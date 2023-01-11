@@ -4,13 +4,8 @@ import android.graphics.Bitmap
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
-import java.util.*
-import android.graphics.BitmapFactory
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import com.example.cartaportes.project.db.dbAccessSeventhScreen.getImage
-import com.google.firebase.storage.StorageReference
+import android.net.Uri
+
 
 
 fun setBitmapToFirebase(bitmap: Bitmap) {
@@ -20,7 +15,7 @@ fun setBitmapToFirebase(bitmap: Bitmap) {
 
     // Create a storage reference from our app
     val storageRef =
-        FirebaseStorage.getInstance().reference.child("images/${UUID.randomUUID()}.jpg")
+        FirebaseStorage.getInstance().reference.child("images/image.jpg")
     val uploadTask = storageRef.putBytes(data)
 
     uploadTask.addOnCompleteListener { task ->
@@ -39,19 +34,20 @@ fun setBitmapToFirebase(bitmap: Bitmap) {
 }
 
 
-fun getImageFromFirebase(directory: String): Bitmap? {
-    val storage = FirebaseStorage.getInstance()
-    val storageRef = storage.getReference(directory)
-    var bitmap: Bitmap? = null
-    val ONE_MEGABYTE: Long = 1024 * 1024
+//No funciona
+//fun getImageFromFirebase(): Uri? {
+//    val storage = FirebaseStorage.getInstance()
+//    val storageRef = storage.getReference("images/*")
+//    var imageUri: Uri? = null
+//    storageRef.downloadUrl.addOnSuccessListener { uri ->
+//        imageUri = uri
+//    }.addOnFailureListener { exception ->
+//        // Handle any errors
+//    }
+//    return imageUri
+//}
 
-    storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener { bytes ->
-        bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-    }.addOnFailureListener { exception ->
-        // Handle any errors
-    }
-    return bitmap
-}
+
 
 
 

@@ -2,19 +2,20 @@ package com.example.cartaportes.project.screens.myScreen
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.FlingBehavior
-import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -22,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
-import com.example.cartaportes.project.db.dbAccessFourthScreen.getImageFromFirebase
 import com.example.cartaportes.project.db.dbAccessSeventhScreen.*
 
 
@@ -30,12 +30,14 @@ import com.example.cartaportes.project.db.dbAccessSeventhScreen.*
 @Composable
 fun SeventhScreen(navigate: NavController) {
 
+
     Scaffold(
         backgroundColor = Color(167, 181, 216, 255),
     ) {
         Column(
             modifier = Modifier
                 .padding(16.dp)
+                .fillMaxSize()
                 .verticalScroll(state = rememberScrollState(0))
         ) {
             val name = remember {
@@ -267,7 +269,32 @@ fun SeventhScreen(navigate: NavController) {
             Text(text = "${date.value}")
 
 
-
+//            var imageUri by remember {
+//                mutableStateOf<Uri?>(null)
+//            }
+//            val context = LocalContext.current
+//            val bitmap = remember {
+//                mutableStateOf<Bitmap?>(null)
+//            }
+//            imageUri = getImageFromFirebase()
+//            imageUri?.let {
+//                if (Build.VERSION.SDK_INT < 28) {
+//                    bitmap.value = MediaStore.Images
+//                        .Media.getBitmap(context.contentResolver, it)
+//
+//                } else {
+//                    val source = ImageDecoder
+//                        .createSource(context.contentResolver, it)
+//                    bitmap.value = ImageDecoder.decodeBitmap(source)
+//                }
+//                bitmap.value?.let { btm ->
+//                    Image(
+//                        bitmap = btm.asImageBitmap(),
+//                        contentDescription = null,
+//                        modifier = Modifier.size(400.dp)
+//                    )
+//                }
+//            }
 
 
         }
