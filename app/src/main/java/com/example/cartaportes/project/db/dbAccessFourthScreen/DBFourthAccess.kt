@@ -23,6 +23,7 @@ fun setBitmapToFirebase(bitmap: Bitmap) {
             storageRef.downloadUrl.addOnSuccessListener { downloadUrl ->
                 // Save the download URL to the database
                 val databaseRef = FirebaseDatabase.getInstance().reference.child("images")
+                databaseRef.removeValue()// Nueva linea
                 databaseRef.push().setValue(downloadUrl.toString())
             }
         } else {
