@@ -1,33 +1,126 @@
 package com.example.cartaportes.project.screens.myScreen
 
 import android.annotation.SuppressLint
-import android.media.Image
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.drawable.toDrawable
-import androidx.navigation.NavController
 import com.example.cartaportes.R
 import com.example.cartaportes.project.db.dbAccessSeventhScreen.*
 import com.example.cartaportes.project.screens.classes.Point
 import kotlinx.coroutines.*
 
 
+
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun SeventhScreen(navigate: NavController) {
+fun SeventhScreen() {
+    // Operator
+    val name = remember {
+        mutableStateOf("")
+    }
+    getOperatorName { name.value = it }
+    val dni = remember {
+        mutableStateOf("")
+    }
+    getOperatorDni { dni.value = it }
+    val address = remember {
+        mutableStateOf("")
+    }
+    getOperatorAddress { address.value = it }
+    val country = remember {
+        mutableStateOf("")
+    }
+    getOperatorCountry { country.value = it }
+    // Consignee
+    val name1 = remember {
+        mutableStateOf("")
+    }
+    getConsigneeName { name1.value = it }
+    val dni1 = remember {
+        mutableStateOf("")
+    }
+    getConsigneeDni { dni1.value = it }
+    val address1 = remember {
+        mutableStateOf("")
+    }
+    getConsigneeAddress { address1.value = it }
+    // Lugar de entrega
+    val delivery = remember {
+        mutableStateOf("")
+    }
+    getDelivery { delivery.value = it }
+    // Lugar de recogida
+    val picking = remember {
+        mutableStateOf("")
+    }
+    getPicking { picking.value = it }
+    // N de Bultos
+    val packageNumber = remember {
+        mutableStateOf("")
+    }
+    getPackage { packageNumber.value = it }
+    // Tipo de embalage
+    val packaging = remember {
+        mutableStateOf("")
+    }
+    getPacking { packaging.value = it }
+    // Tipo de naturaleza
+    val lista = remember {
+        getPackageKind()
+    }
+    // Peso total
+    val weight = remember {
+        mutableStateOf("")
+    }
+    getTotalWeight { weight.value = it }
+    // Método de pago
+    val payment = remember {
+        mutableStateOf("")
+    }
+    getPayment { payment.value = it }
+    // Forma de pago
+    val kind = remember {
+        mutableStateOf("")
+    }
+    getPaymentKind { kind.value = it }
+    // Precio
+    val price = remember {
+        mutableStateOf("")
+    }
+    getPrice { price.value = it }
+    // Reembolso
+    val refund = remember {
+        mutableStateOf("")
+    }
+    getRefund { refund.value = it }
+    // Matrícula
+    val license = remember {
+        mutableStateOf("")
+    }
+    getLicense { license.value = it }
+    // Fecha
+    val date = remember {
+        mutableStateOf("")
+    }
+    getDate { date.value = it }
+    // Imagen
+    val imageBitmap = runBlocking { getImageBitmap() }
+    // Firma
+    var points = remember { mutableStateOf(mutableStateListOf<Point>()) }
+    getSign { points.value = it }
+    // PDF
+    val ctx = LocalContext.current
 
 
     Scaffold(
@@ -39,23 +132,6 @@ fun SeventhScreen(navigate: NavController) {
                 .fillMaxSize()
                 .verticalScroll(state = rememberScrollState(0))
         ) {
-            val name = remember {
-                mutableStateOf("")
-            }
-            getOperatorName { name.value = it }
-            val dni = remember {
-                mutableStateOf("")
-            }
-            getOperatorDni { dni.value = it }
-            val address = remember {
-                mutableStateOf("")
-            }
-            getOperatorAddress { address.value = it }
-            val country = remember {
-                mutableStateOf("")
-            }
-            getOperatorCountry { country.value = it }
-
             Text(
                 text = stringResource(id = R.string.transport_operator),
                 fontSize = 15.sp,
@@ -64,19 +140,6 @@ fun SeventhScreen(navigate: NavController) {
                 ), modifier = Modifier.padding(top = 16.dp)
             )
             Text(text = "Nombre: ${name.value}\nDNI: ${dni.value}\nAddress: ${address.value}\nCountry: ${country.value}")
-
-            val name1 = remember {
-                mutableStateOf("")
-            }
-            getConsigneeName { name1.value = it }
-            val dni1 = remember {
-                mutableStateOf("")
-            }
-            getConsigneeDni { dni1.value = it }
-            val address1 = remember {
-                mutableStateOf("")
-            }
-            getConsigneeAddress { address1.value = it }
 
             Text(
                 text = stringResource(id = R.string.consignee),
@@ -88,11 +151,6 @@ fun SeventhScreen(navigate: NavController) {
             )
             Text(text = "Nombre: ${name1.value}\nDNI: ${dni1.value}\nAddress: ${address1.value}")
 
-            val delivery = remember {
-                mutableStateOf("")
-            }
-            getDelivery { delivery.value = it }
-
             Text(
                 text = stringResource(id = R.string.delivery),
                 fontSize = 15.sp,
@@ -103,10 +161,6 @@ fun SeventhScreen(navigate: NavController) {
             )
             Text(text = "Entrega: ${delivery.value}")
 
-            val picking = remember {
-                mutableStateOf("")
-            }
-            getPicking { picking.value = it }
             Text(
                 text = stringResource(id = R.string.picking),
                 fontSize = 15.sp,
@@ -117,11 +171,6 @@ fun SeventhScreen(navigate: NavController) {
             )
             Text(text = "Rercogida: ${picking.value}")
 
-            val packageNumber = remember {
-                mutableStateOf("")
-            }
-            getPackage { packageNumber.value = it }
-
             Text(
                 text = stringResource(id = R.string.number_packages),
                 fontSize = 15.sp,
@@ -131,12 +180,6 @@ fun SeventhScreen(navigate: NavController) {
                 modifier = Modifier.padding(top = 16.dp)
             )
             Text(text = "Número de paquetes: ${packageNumber.value}")
-
-
-            val packaging = remember {
-                mutableStateOf("")
-            }
-            getPacking { packaging.value = it }
 
             Text(
                 text = stringResource(id = R.string.check_title),
@@ -157,18 +200,11 @@ fun SeventhScreen(navigate: NavController) {
                 ),
                 modifier = Modifier.padding(top = 16.dp)
             )
-            val lista = remember {
-                getPackageKind()
-            }
+
             for (e in lista) {
                 Text(text = e)
             }
 
-
-            val weight = remember {
-                mutableStateOf("")
-            }
-            getTotalWeight { weight.value = it }
             Text(
                 text = stringResource(id = R.string.total_weight),
                 fontSize = 15.sp,
@@ -179,11 +215,6 @@ fun SeventhScreen(navigate: NavController) {
             )
             Text(text = "Peso: ${weight.value} kgs")
 
-
-            val payment = remember {
-                mutableStateOf("")
-            }
-            getPayment { payment.value = it }
             Text(
                 text = stringResource(id = R.string.method_of_payment),
                 fontSize = 15.sp,
@@ -193,11 +224,6 @@ fun SeventhScreen(navigate: NavController) {
                 modifier = Modifier.padding(top = 16.dp)
             )
             Text(text = "Pagador: ${payment.value}")
-
-            val kind = remember {
-                mutableStateOf("")
-            }
-            getPaymentKind { kind.value = it }
 
             Text(
                 text = stringResource(id = R.string.way_of_payment),
@@ -209,11 +235,6 @@ fun SeventhScreen(navigate: NavController) {
             )
             Text(text = "${kind.value}")
 
-
-            val price = remember {
-                mutableStateOf("")
-            }
-            getPrice { price.value = it }
             Text(
                 text = stringResource(id = R.string.total_price),
                 fontSize = 15.sp,
@@ -224,11 +245,6 @@ fun SeventhScreen(navigate: NavController) {
             )
             Text(text = "Precio: ${price.value}€")
 
-
-            val refund = remember {
-                mutableStateOf("")
-            }
-            getRefund { refund.value = it }
             Text(
                 text = stringResource(id = R.string.reimbursement),
                 fontSize = 15.sp,
@@ -238,10 +254,6 @@ fun SeventhScreen(navigate: NavController) {
             )
             Text(text = "${refund.value}")
 
-            val license = remember {
-                mutableStateOf("")
-            }
-            getLicense { license.value = it }
             Text(
                 text = stringResource(id = R.string.vehicle),
                 fontSize = 15.sp,
@@ -252,11 +264,6 @@ fun SeventhScreen(navigate: NavController) {
             )
             Text(text = "Matrícula: ${license.value}")
 
-
-            val date = remember {
-                mutableStateOf("")
-            }
-            getDate { date.value = it }
             Text(
                 text = stringResource(id = R.string.date_of_issue),
                 fontSize = 15.sp,
@@ -267,24 +274,6 @@ fun SeventhScreen(navigate: NavController) {
             )
             Text(text = "${date.value}")
 
-
-            Text(
-                text = stringResource(id = R.string.image_in),
-                fontSize = 15.sp,
-                fontFamily = FontFamily(
-                    Font(R.font.highspeed)
-                ),
-                modifier = Modifier.padding(top = 16.dp)
-            )
-            val imageBitmap = runBlocking { getImageBitmap() }
-            if (imageBitmap != null) {
-                androidx.compose.foundation.Image(
-                    bitmap = imageBitmap.asImageBitmap(),
-                    contentDescription = null,
-                    modifier = Modifier.width(400.dp)
-                )
-            }
-
             Text(
                 text = stringResource(id = R.string.sign_in),
                 fontSize = 15.sp,
@@ -293,9 +282,6 @@ fun SeventhScreen(navigate: NavController) {
                 ),
                 modifier = Modifier.padding(top = 16.dp)
             )
-
-            var points = remember { mutableStateOf(mutableStateListOf<Point>()) }
-            getSign { points.value = it }
 
             Canvas(
                 modifier = Modifier
@@ -333,10 +319,42 @@ fun SeventhScreen(navigate: NavController) {
                 }
             }
 
+            Text(
+                text = stringResource(id = R.string.image_in),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+
+            if (imageBitmap != null) {
+                androidx.compose.foundation.Image(
+                    bitmap = imageBitmap.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier.width(400.dp)
+                )
+            }
+
+            Button(onClick = {
+
+
+
+            }, modifier = Modifier.fillMaxWidth()) {
+                Text(text = "Generar PDF")
+            }
+
+
+
+
+
+
 
         }
     }
 }
+
+
 
 
 

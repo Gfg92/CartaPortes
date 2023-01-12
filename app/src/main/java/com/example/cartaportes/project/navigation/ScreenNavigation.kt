@@ -22,6 +22,6 @@ fun NavigationScreen(){
         composable("fourthScreen") { FouthScreen(navController) }
         composable("fifthScreen") { FifthScreen(navController) }
         composable("sixthScreen") { SixthScreen(navController) }
-        composable("seventhScreen") { SeventhScreen(navController) }
+        composable("seventhScreen") { SeventhScreen() }
     }
 }
