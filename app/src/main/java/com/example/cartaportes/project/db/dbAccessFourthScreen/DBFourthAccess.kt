@@ -17,7 +17,6 @@ fun setBitmapToFirebase(bitmap: Bitmap) {
     val storageRef =
         FirebaseStorage.getInstance().reference.child("images/image.jpg")
     val uploadTask = storageRef.putBytes(data)
-
     uploadTask.addOnCompleteListener { task ->
         if (task.isSuccessful) {
             // Get the download URL
@@ -33,19 +32,6 @@ fun setBitmapToFirebase(bitmap: Bitmap) {
     }
 }
 
-
-//No funciona
-//fun getImageFromFirebase(): Uri? {
-//    val storage = FirebaseStorage.getInstance()
-//    val storageRef = storage.getReference("images/*")
-//    var imageUri: Uri? = null
-//    storageRef.downloadUrl.addOnSuccessListener { uri ->
-//        imageUri = uri
-//    }.addOnFailureListener { exception ->
-//        // Handle any errors
-//    }
-//    return imageUri
-//}
 
 
 
