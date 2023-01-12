@@ -14,6 +14,7 @@ fun setSign(sign: SnapshotStateList<Point>){
     val database = FirebaseDatabase.getInstance()
     val refName = database.getReference("Response")
     val refWrite = refName.child("WriteSign")
+    refWrite.removeValue()
     for (i in 0.. sign.size-1){
         refWrite.child(i.toString()).setValue(sign[i])
     }
