@@ -60,6 +60,10 @@
     <string name="sign">Introduce la firma</string>
     <string name="sign_clear">Limpiar</string>
     <string name="sign_send">Enviar</string>
+    <!--Seventh Screen-->
+    <string name="image_in">Imagen</string>
+    <string name="sign_in">Firma</string>
+
 
 
     <!--Toast-->

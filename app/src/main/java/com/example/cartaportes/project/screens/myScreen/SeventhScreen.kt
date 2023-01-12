@@ -1,21 +1,28 @@
 package com.example.cartaportes.project.screens.myScreen
 
 import android.annotation.SuppressLint
+import android.media.Image
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.drawable.toDrawable
 import androidx.navigation.NavController
 import com.example.cartaportes.R
 import com.example.cartaportes.project.db.dbAccessSeventhScreen.*
+import com.example.cartaportes.project.screens.classes.Point
+import kotlinx.coroutines.*
 
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -261,37 +268,77 @@ fun SeventhScreen(navigate: NavController) {
             Text(text = "${date.value}")
 
 
-//            var imageUri by remember {
-//                mutableStateOf<Uri?>(null)
-//            }
-//            val context = LocalContext.current
-//            val bitmap = remember {
-//                mutableStateOf<Bitmap?>(null)
-//            }
-//            imageUri = getImageFromFirebase()
-//            imageUri?.let {
-//                if (Build.VERSION.SDK_INT < 28) {
-//                    bitmap.value = MediaStore.Images
-//                        .Media.getBitmap(context.contentResolver, it)
-//
-//                } else {
-//                    val source = ImageDecoder
-//                        .createSource(context.contentResolver, it)
-//                    bitmap.value = ImageDecoder.decodeBitmap(source)
-//                }
-//                bitmap.value?.let { btm ->
-//                    Image(
-//                        bitmap = btm.asImageBitmap(),
-//                        contentDescription = null,
-//                        modifier = Modifier.size(400.dp)
-//                    )
-//                }
-//            }
+            Text(
+                text = stringResource(id = R.string.image_in),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            val imageBitmap = runBlocking { getImageBitmap() }
+            if (imageBitmap != null) {
+                androidx.compose.foundation.Image(
+                    bitmap = imageBitmap.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier.width(400.dp)
+                )
+            }
+
+            Text(
+                text = stringResource(id = R.string.sign_in),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+
+            var points = remember { mutableStateOf(mutableStateListOf<Point>()) }
+            getSign { points.value = it }
+
+            Canvas(
+                modifier = Modifier
+                    .size(width = 400.dp, height = 200.dp)
+            ) {
+                var first = true
+                var startx = 0f
+                var starty = 0f
+                for (dot in points.value) {
+                    if (
+                        dot.x > this.size.width ||
+                        dot.y > this.size.height ||
+                        dot.x < 0 ||
+                        dot.y < 0
+                    ) {
+                        continue
+                    }
+                    if (dot.x == -1f && dot.y == -1f) {
+                        first = true
+                    } else
+                        if (first) {
+                            startx = dot.x
+                            starty = dot.y
+                            first = false
+                        } else {
+                            drawLine(
+                                color = dot.color,
+                                start = Offset(x = startx, y = starty),
+                                end = Offset(x = dot.x, y = dot.y),
+                                strokeWidth = 10f
+                            )
+                            startx = dot.x
+                            starty = dot.y
+                        }
+                }
+            }
 
 
         }
     }
 }
+
+
 
 
 
