@@ -21,7 +21,6 @@ import com.example.cartaportes.project.screens.classes.Point
 import kotlinx.coroutines.*
 
 
-
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun SeventhScreen() {
@@ -114,13 +113,14 @@ fun SeventhScreen() {
         mutableStateOf("")
     }
     getDate { date.value = it }
-    // Imagen
-    val imageBitmap = runBlocking { getImageBitmap() }
     // Firma
     var points = remember { mutableStateOf(mutableStateListOf<Point>()) }
     getSign { points.value = it }
+    // Imagen
+    val imageBitmap = runBlocking { getImageBitmap() }
+
     // PDF
-    val ctx = LocalContext.current
+    val context = LocalContext.current
 
 
     Scaffold(
@@ -283,7 +283,7 @@ fun SeventhScreen() {
                 modifier = Modifier.padding(top = 16.dp)
             )
 
-            Canvas(
+           Canvas(
                 modifier = Modifier
                     .size(width = 400.dp, height = 200.dp)
             ) {
@@ -337,17 +337,22 @@ fun SeventhScreen() {
             }
 
             Button(onClick = {
+//                val downloadsDir =
+//                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+//                val pdfFile = File(downloadsDir, "hola.txt")
+//                pdfFile.delete()
+//                pdfFile.writeText("${name.value}")
+
+
+
+
+
 
 
 
             }, modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Generar PDF")
             }
-
-
-
-
-
 
 
         }
