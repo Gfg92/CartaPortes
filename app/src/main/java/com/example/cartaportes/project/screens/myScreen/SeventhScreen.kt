@@ -15,10 +15,12 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -26,6 +28,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.blue
 import com.example.cartaportes.R
 import com.example.cartaportes.project.db.dbAccessSeventhScreen.*
 import com.example.cartaportes.project.screens.classes.Point
@@ -129,7 +132,7 @@ fun SeventhScreen() {
     }
     getDate { date.value = it }
     // Firma
-    var points = remember { mutableStateOf(mutableStateListOf<Point>()) }
+    val points = remember { mutableStateOf(mutableStateListOf<Point>()) }
     getSign { points.value = it }
     // Imagen
     val imageBitmap = runBlocking { getImageBitmap() }
@@ -360,7 +363,18 @@ fun SeventhScreen() {
 //                pdfFile.writeText("${name.value}")
 
                 // CREATE A .PDF
-                generatePDF(context, getDirectory(), name.value, dni.value, address.value, country.value)
+                generatePDF(
+                    context,
+                    getDirectory(),
+                    name.value,
+                    dni.value,
+                    address.value,
+                    country.value,
+                    name1.value,
+                    dni1.value,
+                    address1.value,
+                    points.value
+                )
 
             }, modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Generar PDF")
@@ -378,6 +392,10 @@ private fun generatePDF(
     dni: String,
     address: String,
     country: String,
+    name1: String,
+    dni1: String,
+    address1: String,
+    points: SnapshotStateList<Point>
 ) {
     val pageHeight = 1120
     val pageWidth = 792
@@ -388,21 +406,74 @@ private fun generatePDF(
     val myPage = pdfDocument.startPage(myPageInfo)
     val canvas: Canvas = myPage.canvas
     val bitmap: Bitmap? = drawableToBitmap(context.resources.getDrawable(R.drawable.camion))
-    val scaleBitmap: Bitmap? = Bitmap.createScaledBitmap(bitmap!!, 50, 50, false)
+    val scaleBitmap: Bitmap? = Bitmap.createScaledBitmap(bitmap!!, 30, 30, false)
     canvas.drawBitmap(scaleBitmap!!, 40f, 40f, paint)
 
-    title.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
-    title.textSize = 25f
-    title.color = ContextCompat.getColor(context, R.color.purple_200)
-    canvas.drawText("Operador de transporte", 200f, 80f, title)
+    //Header
+    title.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+    title.textSize = 40f
+    title.textAlign = Paint.Align.CENTER
+    title.color = ContextCompat.getColor(context, R.color.black)
+    canvas.drawText("CARTA DE PORTE", 396f, 100f, title)
+
+    //Title
+    title.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+    title.textSize = 20f
+    title.textAlign = Paint.Align.LEFT
+    title.color = ContextCompat.getColor(context, R.color.black)
+    canvas.drawText("Operador de transporte", 150f, 200f, title)
+    canvas.drawText("Consignatario", 450f, 200f, title)
+    //Text
     title.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
     title.color = ContextCompat.getColor(context, R.color.black)
     title.textSize = 15f
-    title.textAlign = Paint.Align.CENTER
-    canvas.drawText("Nombre: $name", 300f, 100f, title)
-    canvas.drawText("DNI: $dni", 300f, 120f, title)
-    canvas.drawText("Dirección: $address", 300f, 140f, title)
-    canvas.drawText("País: $country", 300f, 160f, title)
+    title.textAlign = Paint.Align.LEFT
+    canvas.drawText("Nombre: $name", 150f, 220f, title)
+    canvas.drawText("DNI: $dni", 150f, 240f, title)
+    canvas.drawText("Dirección: $address", 150f, 260f, title)
+    canvas.drawText("País: $country", 150f, 280f, title)
+    canvas.drawText("Nombre: $name1", 450f, 220f, title)
+    canvas.drawText("DNI: $dni1", 450f, 240f, title)
+    canvas.drawText("Dirección: $address1", 450f, 260f, title)
+    //Sign
+    var first = true
+    var startx = 0f
+    var starty = 0f
+    //Mover puntos
+    val xOffset = 400
+    val yOffset = 900
+    for (dot in points) {
+        val dotx = dot.x / 4
+        val doty = dot.y / 4
+        if (
+            dotx > canvas.width ||
+            doty > canvas.height ||
+            dotx < 0 ||
+            doty < 0
+        ) {
+            continue
+        }
+        if (dot.x == -1f && dot.y == -1f) {
+            first = true
+        } else
+            if (first) {
+                startx = dotx
+                starty = doty
+                first = false
+            } else {
+                canvas.drawLine(
+                    startx + xOffset,
+                    starty + yOffset,
+                    dotx  + xOffset,
+                    doty  + yOffset,
+                    paint
+                )
+                startx = dotx
+                starty = doty
+            }
+    }
+
+
 
     pdfDocument.finishPage(myPage)
     val file = File(directory, "cartaPortes.pdf")
