@@ -33,6 +33,7 @@ import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.math.absoluteValue
 
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -357,9 +358,9 @@ fun SeventhScreen() {
 //                val pdfFile = File(downloadsDir, "hola.txt")
 //                pdfFile.delete()
 //                pdfFile.writeText("${name.value}")
-                // CREATE A .PDF
 
-                generatePDF(context, getDirectory(), name.value)
+                // CREATE A .PDF
+                generatePDF(context, getDirectory(), name.value, dni.value, address.value, country.value)
 
             }, modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Generar PDF")
@@ -370,7 +371,14 @@ fun SeventhScreen() {
 
 }
 
-private fun generatePDF(context: Context, directory: File, name: String) {
+private fun generatePDF(
+    context: Context,
+    directory: File,
+    name: String,
+    dni: String,
+    address: String,
+    country: String,
+) {
     val pageHeight = 1120
     val pageWidth = 792
     val pdfDocument = PdfDocument()
@@ -380,24 +388,22 @@ private fun generatePDF(context: Context, directory: File, name: String) {
     val myPage = pdfDocument.startPage(myPageInfo)
     val canvas: Canvas = myPage.canvas
     val bitmap: Bitmap? = drawableToBitmap(context.resources.getDrawable(R.drawable.camion))
-    val scaleBitmap: Bitmap? = Bitmap.createScaledBitmap(bitmap!!, 120, 120, false)
+    val scaleBitmap: Bitmap? = Bitmap.createScaledBitmap(bitmap!!, 50, 50, false)
     canvas.drawBitmap(scaleBitmap!!, 40f, 40f, paint)
+
     title.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
-    title.textSize = 15f
+    title.textSize = 25f
     title.color = ContextCompat.getColor(context, R.color.purple_200)
-    canvas.drawText("Jetpack Compose", 400f, 100f, title)
-    canvas.drawText("Make it Easy", 400f, 80f, title)
-    canvas.drawText("$name", 400f, 120f, title)
+    canvas.drawText("Operador de transporte", 200f, 80f, title)
     title.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
-    title.color = ContextCompat.getColor(context, R.color.purple_200)
+    title.color = ContextCompat.getColor(context, R.color.black)
     title.textSize = 15f
     title.textAlign = Paint.Align.CENTER
-    canvas.drawText(
-        "This is sample document which we have created by Guillermo.",
-        399f,
-        560f,
-        title
-    )
+    canvas.drawText("Nombre: $name", 300f, 100f, title)
+    canvas.drawText("DNI: $dni", 300f, 120f, title)
+    canvas.drawText("Dirección: $address", 300f, 140f, title)
+    canvas.drawText("País: $country", 300f, 160f, title)
+
     pdfDocument.finishPage(myPage)
     val file = File(directory, "cartaPortes.pdf")
 
