@@ -1,6 +1,7 @@
 package com.example.cartaportes.project.screens.myScreen
 
 import android.annotation.SuppressLint
+import android.os.Environment
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -19,6 +20,7 @@ import com.example.cartaportes.R
 import com.example.cartaportes.project.db.dbAccessSeventhScreen.*
 import com.example.cartaportes.project.screens.classes.Point
 import kotlinx.coroutines.*
+import java.io.File
 
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -121,7 +123,7 @@ fun SeventhScreen() {
 
     // PDF
     val context = LocalContext.current
-
+    requestForegroundPermission(context)
 
     Scaffold(
         backgroundColor = Color(167, 181, 216, 255),
@@ -283,7 +285,7 @@ fun SeventhScreen() {
                 modifier = Modifier.padding(top = 16.dp)
             )
 
-           Canvas(
+            Canvas(
                 modifier = Modifier
                     .size(width = 400.dp, height = 200.dp)
             ) {
@@ -337,18 +339,14 @@ fun SeventhScreen() {
             }
 
             Button(onClick = {
+                // CREATE A .TXT
 //                val downloadsDir =
 //                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 //                val pdfFile = File(downloadsDir, "hola.txt")
 //                pdfFile.delete()
 //                pdfFile.writeText("${name.value}")
-
-
-
-
-
-
-
+                // CREATE A .PDF
+                generatePDF(context, getDirectory())
 
             }, modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Generar PDF")
@@ -357,7 +355,15 @@ fun SeventhScreen() {
 
         }
     }
+
 }
+
+private fun getDirectory(): File {
+    val mediaDir =
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) as File
+    return mediaDir
+}
+
 
 
 
