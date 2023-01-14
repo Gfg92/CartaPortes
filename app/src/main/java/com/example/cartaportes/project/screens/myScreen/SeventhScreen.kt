@@ -347,7 +347,7 @@ fun SeventhScreen() {
             )
 
             if (imageBitmap != null) {
-                androidx.compose.foundation.Image(
+                Image(
                     bitmap = imageBitmap.asImageBitmap(),
                     contentDescription = null,
                     modifier = Modifier.width(400.dp)
