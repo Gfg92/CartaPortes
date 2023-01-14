@@ -373,6 +373,18 @@ fun SeventhScreen() {
                     name1.value,
                     dni1.value,
                     address1.value,
+                    delivery.value,
+                    picking.value,
+                    packageNumber.value,
+                    packaging.value,
+                    lista,
+                    weight.value,
+                    payment.value,
+                    kind.value,
+                    price.value,
+                    refund.value,
+                    license.value,
+                    date.value,
                     points.value
                 )
                 System.exit(-1)
