@@ -33,7 +33,13 @@ fun setBitmapToFirebase(bitmap: Bitmap) {
     }
 }
 
-
+fun removeImageRef(){
+    val storageRef =
+        FirebaseStorage.getInstance().reference.child("images/image.jpg")
+    val databaseRef = FirebaseDatabase.getInstance().reference.child("images")
+    storageRef.delete()
+    databaseRef.removeValue()
+}
 
 
 

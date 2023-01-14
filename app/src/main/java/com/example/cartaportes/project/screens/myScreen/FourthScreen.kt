@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
+import com.example.cartaportes.project.db.dbAccessFourthScreen.removeImageRef
 import com.example.cartaportes.project.db.dbAccessFourthScreen.setBitmapToFirebase
 
 
