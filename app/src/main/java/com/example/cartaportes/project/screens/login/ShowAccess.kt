@@ -5,11 +5,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,10 +23,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
+import com.example.cartaportes.project.db.dbAccessLoginScreen.loginAccess
 
 
 @Composable
 fun Login(navController: NavController) {
+    val email = remember {
+        mutableStateOf("")
+    }
+    val password = remember {
+        mutableStateOf("")
+    }
     Scaffold(
         backgroundColor = Color(167, 181, 216, 255),
         topBar = {
@@ -60,13 +66,31 @@ fun Login(navController: NavController) {
                 contentDescription = stringResource(id = R.string.content_description_truck),
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
-                    .size(350.dp)
+                    .size(150.dp)
                     .fillMaxSize()
                     .clip(RoundedCornerShape(16.dp))
                     .border(border = BorderStroke(2.dp, Color.Black))
             )
+            Text(
+                text = "Usuario",
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ), modifier = Modifier.padding(top = 16.dp)
+            )
+            TextField(value = email.value, onValueChange = { email.value = it })
+            Text(
+                text = "Contraseña",
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ), modifier = Modifier.padding(top = 16.dp)
+            )
+            TextField(value = password.value, onValueChange = { password.value = it })
+
+
             Button(onClick = {
-                navController.navigate("firstScreen")
+                loginAccess(email.value, password.value, navController)
             }, modifier = Modifier.padding(top = 50.dp)) {
                 Text(
                     text = stringResource(id = R.string.text_button),
