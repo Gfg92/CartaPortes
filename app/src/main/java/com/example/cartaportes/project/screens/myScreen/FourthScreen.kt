@@ -1,5 +1,6 @@
 package com.example.cartaportes.project.screens.myScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -8,6 +9,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -49,7 +51,8 @@ fun FourthScreen(navigate: NavController) {
     var expandedDriver by remember {
         mutableStateOf(false)
     }
-
+    // FAB
+    val context = LocalContext.current
 
     Scaffold(
         backgroundColor = Color(167, 181, 216, 255),
@@ -66,10 +69,20 @@ fun FourthScreen(navigate: NavController) {
                     )
                 }
                 FloatingActionButton(onClick = {
-                    setLicensePlate(selectedVehicle)
-                    setTrailerLicense(selectedTrailer)
-                    setDriverName(selectedDriver)
-                    navigate.navigate("fifthScreen")
+                    if (selectedVehicle == "" || selectedTrailer == "" || selectedDriver == ""){
+                        Toast.makeText(
+                            context,
+                            R.string.toast_error,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }else{
+                        setLicensePlate(selectedVehicle)
+                        setTrailerLicense(selectedTrailer)
+                        setDriverName(selectedDriver)
+                        navigate.navigate("fifthScreen")
+                    }
+
+
                 }) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowRight,

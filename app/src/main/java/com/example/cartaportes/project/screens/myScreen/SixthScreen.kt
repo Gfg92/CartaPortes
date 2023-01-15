@@ -5,6 +5,7 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.view.MotionEvent
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
@@ -62,6 +63,9 @@ fun SixthScreen(navigate: NavController) {
     // Sign
     val points = remember { mutableStateListOf<Point>() }
     val selectedColor by remember { mutableStateOf(Color.Black) }
+
+    // FAB
+    val context = LocalContext.current
 
     Scaffold(
         backgroundColor = Color(167, 181, 216, 255),
@@ -173,9 +177,17 @@ fun SixthScreen(navigate: NavController) {
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Button(onClick = {
-                    setDate(mDate.value)
-                    setSign(points)
-                    navigate.navigate("seventhScreen")
+                    if (mDate.value == ""|| points.size == 0){
+                        Toast.makeText(
+                            context,
+                            R.string.toast_error,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }else{
+                        setDate(mDate.value)
+                        setSign(points)
+                        navigate.navigate("seventhScreen")
+                    }
                 }) {
                     Text(text = stringResource(id = R.string.sign_send), color = Color.White)
                 }

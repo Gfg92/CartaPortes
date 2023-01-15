@@ -92,7 +92,7 @@ fun FifthScreen(navigate: NavController) {
                     )
                 }
                 FloatingActionButton(onClick = {
-                    if (namePayment == "") {
+                    if (namePayment == "" || refund == "") {
                         Toast.makeText(
                             context,
                             R.string.toast_error,

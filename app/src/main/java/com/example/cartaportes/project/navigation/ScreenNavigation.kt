@@ -14,7 +14,7 @@ import com.example.cartaportes.project.screens.myScreen.*
 fun NavigationScreen(){
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "seventhScreen") {
+    NavHost(navController = navController, startDestination = "login") {
         composable("login") { Login(navController) }
         composable("firstScreen") { FirstScreen(navController) }
         composable("secondScreen") { SecondScreen(navController) }

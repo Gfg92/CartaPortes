@@ -127,8 +127,9 @@ fun generatePDF(
     canvas.drawText("Precio total", 450f, 700f, subtitle)
     canvas.drawText("Matrícula vehículo", 150f, 820f, subtitle)
     canvas.drawText("Matrícula remolque", 450f, 820f, subtitle)
-    canvas.drawText("Firma operador", 150f, 950f, subtitle)
-    canvas.drawText("Firma consignatario", 450f, 950f, subtitle)
+    canvas.drawText("Firma operador", 150f, 970f, subtitle)
+    canvas.drawText("Firma consignatario", 450f, 970f, subtitle)
+    canvas.drawText("Fecha", 450f, 890f, subtitle)
     //Text
     text.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
     text.color = ContextCompat.getColor(context, R.color.black)
@@ -164,18 +165,19 @@ fun generatePDF(
     canvas.drawLine(150f, 770f, 650f, 771f, paint)
     canvas.drawText("$license", 150f, 840f, text)
     canvas.drawText("$trailerLicense", 450f, 840f, text)
-
+    canvas.drawText("$date", 450f, 910f, text)
+    canvas.drawText("$driverName", 150f, 1080f, text)
     //Sign
     var first = true
     var startx = 0f
     var starty = 0f
     //Move points
     val xOffset = 150f
-    val yOffset = 970f
+    val yOffset = 980f
     for (dot in points) {
         // Sing size
-        val dotx = dot.x / 4
-        val doty = dot.y / 4
+        val dotx = dot.x / 6
+        val doty = dot.y / 6
         if (
             dotx > canvas.width ||
             doty > canvas.height ||
@@ -203,7 +205,6 @@ fun generatePDF(
                 starty = doty
             }
     }
-
 
 
     pdfDocument.finishPage(myPage)
