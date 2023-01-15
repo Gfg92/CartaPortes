@@ -5,20 +5,23 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -34,6 +37,16 @@ fun Login(navController: NavController) {
     val password = remember {
         mutableStateOf("")
     }
+    var passwordVisibility by remember { mutableStateOf(false) }
+
+    val icon = if (passwordVisibility)
+        painterResource(id = R.drawable.eye_text_view_foreground)
+    else
+        painterResource(id = R.drawable.eye_text_view_oposite_foreground)
+
+    // Button
+    val context = LocalContext.current
+
     Scaffold(
         backgroundColor = Color(167, 181, 216, 255),
         topBar = {
@@ -52,14 +65,13 @@ fun Login(navController: NavController) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
         ) {
             Text(
                 text = stringResource(id = R.string.title_page),
                 fontSize = 30.sp,
                 fontFamily = FontFamily(Font(R.font.highspeed)),
                 letterSpacing = 1.sp,
-                modifier = Modifier.padding(bottom = 50.dp), color = Color.White
+                modifier = Modifier.padding(top = 30.dp, bottom = 20.dp), color = Color.White
             )
             Image(
                 painter = painterResource(id = R.drawable.camion),
@@ -78,7 +90,12 @@ fun Login(navController: NavController) {
                     Font(R.font.highspeed)
                 ), modifier = Modifier.padding(top = 16.dp)
             )
-            TextField(value = email.value, onValueChange = { email.value = it })
+            OutlinedTextField(value = email.value,
+                onValueChange = { email.value = it }, label = {
+                    Text(
+                        text = "Email"
+                    )
+                })
             Text(
                 text = "Contraseña",
                 fontSize = 15.sp,
@@ -86,12 +103,36 @@ fun Login(navController: NavController) {
                     Font(R.font.highspeed)
                 ), modifier = Modifier.padding(top = 16.dp)
             )
-            TextField(value = password.value, onValueChange = { password.value = it })
+
+            OutlinedTextField(
+                value = password.value,
+                onValueChange = {
+                    password.value = it
+                },
+                placeholder = { Text(text = "Password") },
+                label = { Text(text = "Password") },
+                trailingIcon = {
+                    IconButton(onClick = {
+                        passwordVisibility = !passwordVisibility
+                    }) {
+                        Icon(
+                            painter = icon,
+                            contentDescription = "Visibility Icon",
+                            modifier = Modifier.size(50.dp)
+                        )
+                    }
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password
+                ),
+                visualTransformation = if (passwordVisibility) VisualTransformation.None
+                else PasswordVisualTransformation()
+            )
 
 
             Button(onClick = {
-                loginAccess(email.value, password.value, navController)
-            }, modifier = Modifier.padding(top = 50.dp)) {
+                loginAccess(email.value, password.value, navController, context)
+            }, modifier = Modifier.padding(top = 30.dp)) {
                 Text(
                     text = stringResource(id = R.string.text_button),
                     color = Color.White,
