@@ -82,6 +82,8 @@ fun generatePDF(
     price: String,
     refund: String,
     license: String,
+    trailerLicense: String,
+    driverName : String,
     date: String,
     points: SnapshotStateList<Point>
 ) {
@@ -124,7 +126,7 @@ fun generatePDF(
     canvas.drawText("Reembolso", 150f, 700f, subtitle)
     canvas.drawText("Precio total", 450f, 700f, subtitle)
     canvas.drawText("Matrícula vehículo", 150f, 820f, subtitle)
-    canvas.drawText("Fecha", 450f, 820f, subtitle)
+    canvas.drawText("Matrícula remolque", 450f, 820f, subtitle)
     canvas.drawText("Firma operador", 150f, 950f, subtitle)
     canvas.drawText("Firma consignatario", 450f, 950f, subtitle)
     //Text
@@ -161,9 +163,7 @@ fun generatePDF(
     }
     canvas.drawLine(150f, 770f, 650f, 771f, paint)
     canvas.drawText("$license", 150f, 840f, text)
-    canvas.drawText("$date", 450f, 840f, text)
-
-
+    canvas.drawText("$trailerLicense", 450f, 840f, text)
 
     //Sign
     var first = true

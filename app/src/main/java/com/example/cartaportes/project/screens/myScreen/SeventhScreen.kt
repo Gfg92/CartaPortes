@@ -97,7 +97,6 @@ fun SeventhScreen() {
         mutableStateOf("")
     }
     getDriverName { driverName.value = it }
-
     // Método de pago
     val payment = remember {
         mutableStateOf("")
@@ -370,6 +369,8 @@ fun SeventhScreen() {
                     price.value,
                     refund.value,
                     license.value,
+                    trailerLicense.value,
+                    driverName.value,
                     date.value,
                     points.value
                 )
