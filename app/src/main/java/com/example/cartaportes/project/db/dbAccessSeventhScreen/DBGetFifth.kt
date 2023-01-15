@@ -60,16 +60,3 @@ fun getRefund(callback: (String) -> Unit){
     })
 }
 
-fun getLicense(callback: (String) -> Unit){
-    val ref = FirebaseDatabase.getInstance().getReference("Response/WriteLicense")
-    ref.addListenerForSingleValueEvent(object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val license = dataSnapshot.child("licensePlate").getValue(String::class.java) ?: ""
-            callback(license)
-        }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-            // Handle errors here
-        }
-    })
-}

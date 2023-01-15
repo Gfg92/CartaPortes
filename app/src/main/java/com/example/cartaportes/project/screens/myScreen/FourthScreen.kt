@@ -1,13 +1,5 @@
 package com.example.cartaportes.project.screens.myScreen
 
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -16,38 +8,48 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
-import com.example.cartaportes.project.db.dbAccessFourthScreen.removeImageRef
-import com.example.cartaportes.project.db.dbAccessFourthScreen.setBitmapToFirebase
+import com.example.cartaportes.project.db.dbAccessFourthScreen.*
 
-
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FouthScreen(navigate: NavController) {
+fun FourthScreen(navigate: NavController) {
+    // Vehicle
+    val vehicleList = getVehicleList()
+    var selectedVehicle by remember {
+        mutableStateOf("")
+    }
+    val nameVehicle = selectedVehicle
+    var expandedVehicle by remember {
+        mutableStateOf(false)
+    }
 
-    // Image
-    var imageUri by remember {
-        mutableStateOf<Uri?>(null)
+    // Trailer
+    val trailerList = getTrailerList()
+    var selectedTrailer by remember {
+        mutableStateOf("")
     }
-    val context = LocalContext.current
-    val bitmap = remember {
-        mutableStateOf<Bitmap?>(null)
+
+    var expandedTrailer by remember {
+        mutableStateOf(false)
     }
-    val launcher = rememberLauncherForActivityResult(
-        contract =
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        imageUri = uri
+
+    // Driver name
+    val driverList = getDriverList()
+    var selectedDriver by remember {
+        mutableStateOf("")
     }
+
+    var expandedDriver by remember {
+        mutableStateOf(false)
+    }
+
 
     Scaffold(
         backgroundColor = Color(167, 181, 216, 255),
@@ -64,12 +66,10 @@ fun FouthScreen(navigate: NavController) {
                     )
                 }
                 FloatingActionButton(onClick = {
-                    if (bitmap.value == null){
-                        navigate.navigate("fifthScreen")
-                    }else{
-                        setBitmapToFirebase(bitmap.value!!)
-                        navigate.navigate("fifthScreen")
-                    }
+                    setLicensePlate(selectedVehicle)
+                    setTrailerLicense(selectedTrailer)
+                    setDriverName(selectedDriver)
+                    navigate.navigate("fifthScreen")
                 }) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowRight,
@@ -82,8 +82,66 @@ fun FouthScreen(navigate: NavController) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
+            // Vehicle
             Text(
-                text = stringResource(id = R.string.senders_instructions),
+                text = stringResource(id = R.string.vehicle),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            ExposedDropdownMenuBox(
+                expanded = expandedVehicle,
+                onExpandedChange = {
+                    expandedVehicle = !expandedVehicle
+                }
+            ) {
+                OutlinedTextField(
+                    value = selectedVehicle,
+                    onValueChange = { selectedVehicle = it },
+                    label = { Text(text = stringResource(id = R.string.registration_number)) },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(
+                            expanded = expandedVehicle
+                        )
+                    },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors()
+                )
+
+                // filter options based on text field value
+                val filteringOptions =
+                    vehicleList.filter { it.contains(selectedVehicle, ignoreCase = true) }
+
+                if (filteringOptions.isNotEmpty()) {
+                    ExposedDropdownMenu(
+                        expanded = expandedVehicle,
+                        onDismissRequest = { expandedVehicle = false }
+                    ) {
+                        filteringOptions.forEach { selectionOption ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    selectedVehicle = selectionOption
+                                    expandedVehicle = false
+                                }
+                            ) {
+                                Text(text = selectionOption)
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            Text(
+                text = "Matrícula: $nameVehicle",
+                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+            )
+
+            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
+
+            Text(
+                text = stringResource(id = R.string.trailer_license),
                 fontSize = 15.sp,
                 fontFamily = FontFamily(
                     Font(R.font.highspeed)
@@ -91,45 +149,111 @@ fun FouthScreen(navigate: NavController) {
                 modifier = Modifier.padding(top = 16.dp)
             )
 
-            // Image
-            Button(onClick = {
-                launcher.launch("image/*")
-            }) {
-                Text(text = stringResource(id = R.string.pick_image), color = Color.White)
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-
-            imageUri?.let {
-                if (Build.VERSION.SDK_INT < 28) {
-                    bitmap.value = MediaStore.Images
-                        .Media.getBitmap(context.contentResolver, it)
-
-                } else {
-                    val source = ImageDecoder
-                        .createSource(context.contentResolver, it)
-                    bitmap.value = ImageDecoder.decodeBitmap(source)
+            ExposedDropdownMenuBox(
+                expanded = expandedTrailer,
+                onExpandedChange = {
+                    expandedTrailer = !expandedTrailer
                 }
-                bitmap.value?.let { btm ->
-                    Image(
-                        bitmap = btm.asImageBitmap(),
-                        contentDescription = null,
-                        modifier = Modifier.size(400.dp)
-                    )
+            ) {
+                OutlinedTextField(
+                    value = selectedTrailer,
+                    onValueChange = { selectedTrailer = it },
+                    label = { Text(text = stringResource(id = R.string.trailer_selected)) },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(
+                            expanded = expandedTrailer
+                        )
+                    },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors()
+                )
+
+                // filter options based on text field value
+                val filteringOptions =
+                    trailerList.filter { it.contains(selectedTrailer, ignoreCase = true) }
+
+
+                if (filteringOptions.isNotEmpty()) {
+                    ExposedDropdownMenu(
+                        expanded = expandedTrailer,
+                        onDismissRequest = { expandedTrailer = false }
+                    ) {
+                        filteringOptions.forEach { selectionOption ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    selectedTrailer = selectionOption
+                                    expandedTrailer = false
+                                }
+                            ) {
+                                Text(text = selectionOption)
+                            }
+                        }
+                    }
                 }
+
             }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
             Text(
-                text = stringResource(id = R.string.particular_stipulations),
-                textAlign = TextAlign.Justify,
-                fontWeight = FontWeight.Bold
+                text = "Matrícula: $selectedTrailer",
+                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
             )
 
+            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
+
+
+
+            Text(
+                text = stringResource(id = R.string.driver),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+
+            ExposedDropdownMenuBox(
+                expanded = expandedDriver,
+                onExpandedChange = {
+                    expandedDriver = !expandedDriver
+                }
+            ) {
+                OutlinedTextField(
+                    value = selectedDriver,
+                    onValueChange = { selectedDriver = it },
+                    label = { Text(text = stringResource(id = R.string.name_selected)) },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(
+                            expanded = expandedDriver
+                        )
+                    },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors()
+                )
+
+                // filter options based on text field value
+                val filteringOptions =
+                    driverList.filter { it.contains(selectedDriver, ignoreCase = true) }
+
+
+                if (filteringOptions.isNotEmpty()) {
+                    ExposedDropdownMenu(
+                        expanded = expandedDriver,
+                        onDismissRequest = { expandedDriver = false }
+                    ) {
+                        filteringOptions.forEach { selectionOption ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    selectedDriver = selectionOption
+                                    expandedDriver = false
+                                }
+                            ) {
+                                Text(text = selectionOption)
+                            }
+                        }
+                    }
+                }
+            }
+            Text(
+                text = "Nombre: $selectedDriver",
+                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+            )
         }
     }
 }
-
-

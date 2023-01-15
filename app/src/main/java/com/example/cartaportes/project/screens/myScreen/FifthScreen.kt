@@ -73,15 +73,6 @@ fun FifthScreen(navigate: NavController) {
     }
 
 
-    // Vehicle
-    val vehicleList = getVehicleList()
-    var selectedVehicle by remember {
-        mutableStateOf("")
-    }
-    var expanded1 by remember {
-        mutableStateOf(false)
-    }
-    val nameVehicle = selectedVehicle
 
     // FAB
     val context = LocalContext.current
@@ -117,7 +108,6 @@ fun FifthScreen(navigate: NavController) {
                         setPayment(namePayment)
                         setPaymentWay(paidValue, price)
                         setRefund(refund)
-                        setLicensePlate(nameVehicle)
                         navigate.navigate("sixthScreen")
                     }
                 }) {
@@ -258,63 +248,7 @@ fun FifthScreen(navigate: NavController) {
 
             Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
-            // Vehicle
-            Text(
-                text = stringResource(id = R.string.vehicle),
-                fontSize = 15.sp,
-                fontFamily = FontFamily(
-                    Font(R.font.highspeed)
-                ),
-                modifier = Modifier.padding(top = 16.dp)
-            )
 
-            ExposedDropdownMenuBox(
-                expanded = expanded1,
-                onExpandedChange = {
-                    expanded1 = !expanded1
-                }
-            ) {
-                OutlinedTextField(
-                    value = selectedVehicle,
-                    onValueChange = { selectedVehicle = it },
-                    label = { Text(text = stringResource(id = R.string.registration_number)) },
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(
-                            expanded = expanded1
-                        )
-                    },
-                    colors = ExposedDropdownMenuDefaults.textFieldColors()
-                )
-
-                // filter options based on text field value
-                val filteringOptions =
-                    vehicleList.filter { it.contains(selectedVehicle, ignoreCase = true) }
-
-
-                if (filteringOptions.isNotEmpty()) {
-                    ExposedDropdownMenu(
-                        expanded = expanded1,
-                        onDismissRequest = { expanded1 = false }
-                    ) {
-                        filteringOptions.forEach { selectionOption ->
-                            DropdownMenuItem(
-                                onClick = {
-                                    selectedVehicle = selectionOption
-                                    expanded1 = false
-                                }
-                            ) {
-                                Text(text = selectionOption)
-                            }
-                        }
-                    }
-                }
-
-            }
-
-            Text(
-                text = "Matrícula: $nameVehicle",
-                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
-            )
 
 
 

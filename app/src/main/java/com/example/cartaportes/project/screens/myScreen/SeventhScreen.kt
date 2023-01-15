@@ -1,42 +1,23 @@
 package com.example.cartaportes.project.screens.myScreen
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Typeface
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.graphics.pdf.PdfDocument
-import android.os.Environment
-import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.blue
 import com.example.cartaportes.R
 import com.example.cartaportes.project.db.dbAccessSeventhScreen.*
 import com.example.cartaportes.project.screens.classes.Point
-import kotlinx.coroutines.*
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import kotlin.math.absoluteValue
+
 
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -101,6 +82,22 @@ fun SeventhScreen() {
         mutableStateOf("")
     }
     getTotalWeight { weight.value = it }
+    // Matrícula Vehículo
+    val license = remember {
+        mutableStateOf("")
+    }
+    getLicense { license.value = it }
+    // Matrícula Trailer
+    val trailerLicense = remember {
+        mutableStateOf("")
+    }
+    getTrailerLicense { trailerLicense.value = it }
+    // Conductor
+    val driverName = remember {
+        mutableStateOf("")
+    }
+    getDriverName { driverName.value = it }
+
     // Método de pago
     val payment = remember {
         mutableStateOf("")
@@ -121,11 +118,6 @@ fun SeventhScreen() {
         mutableStateOf("")
     }
     getRefund { refund.value = it }
-    // Matrícula
-    val license = remember {
-        mutableStateOf("")
-    }
-    getLicense { license.value = it }
     // Fecha
     val date = remember {
         mutableStateOf("")
@@ -134,8 +126,6 @@ fun SeventhScreen() {
     // Firma
     val points = remember { mutableStateOf(mutableStateListOf<Point>()) }
     getSign { points.value = it }
-    // Imagen
-    val imageBitmap = runBlocking { getImageBitmap() }
 
     // PDF
     val context = LocalContext.current
@@ -234,6 +224,36 @@ fun SeventhScreen() {
             Text(text = "Peso: ${weight.value} kgs")
 
             Text(
+                text = stringResource(id = R.string.vehicle),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            Text(text = "Matrícula: ${license.value}")
+
+            Text(
+                text = stringResource(id = R.string.trailer_license),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            Text(text = "Matrícula: ${trailerLicense.value}")
+
+            Text(
+                text = stringResource(id = R.string.driver),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            Text(text = "Nombre: ${driverName.value}")
+
+            Text(
                 text = stringResource(id = R.string.method_of_payment),
                 fontSize = 15.sp,
                 fontFamily = FontFamily(
@@ -268,19 +288,9 @@ fun SeventhScreen() {
                 fontSize = 15.sp,
                 fontFamily = FontFamily(
                     Font(R.font.highspeed)
-                )
+                ), modifier = Modifier.padding(top = 16.dp)
             )
             Text(text = "${refund.value}")
-
-            Text(
-                text = stringResource(id = R.string.vehicle),
-                fontSize = 15.sp,
-                fontFamily = FontFamily(
-                    Font(R.font.highspeed)
-                ),
-                modifier = Modifier.padding(top = 16.dp)
-            )
-            Text(text = "Matrícula: ${license.value}")
 
             Text(
                 text = stringResource(id = R.string.date_of_issue),
@@ -337,31 +347,7 @@ fun SeventhScreen() {
                 }
             }
 
-            Text(
-                text = stringResource(id = R.string.image_in),
-                fontSize = 15.sp,
-                fontFamily = FontFamily(
-                    Font(R.font.highspeed)
-                ),
-                modifier = Modifier.padding(top = 16.dp)
-            )
-
-            if (imageBitmap != null) {
-                Image(
-                    bitmap = imageBitmap.asImageBitmap(),
-                    contentDescription = null,
-                    modifier = Modifier.width(400.dp)
-                )
-            }
-
             Button(onClick = {
-                // CREATE A .TXT
-//                val downloadsDir =
-//                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-//                val pdfFile = File(downloadsDir, "hola.txt")
-//                pdfFile.delete()
-//                pdfFile.writeText("${name.value}")
-
                 // CREATE A .PDF
                 generatePDF(
                     context,
