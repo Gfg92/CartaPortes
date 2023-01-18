@@ -91,7 +91,9 @@ fun Login(navController: NavController) {
                 ), modifier = Modifier.padding(top = 16.dp)
             )
             OutlinedTextField(value = email.value,
-                onValueChange = { email.value = it }, label = {
+                onValueChange = { email.value = it },
+                placeholder = { Text(text = "Email") },
+                label = {
                     Text(
                         text = "Email"
                     )
