@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.cartaportes.project.screens.login.Login
-import com.example.cartaportes.project.screens.myScreen.*
+import com.example.cartaportes.project.front.login.Login
+import com.example.cartaportes.project.front.myScreen.*
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
