@@ -30,28 +30,9 @@ import com.example.cartaportes.project.back.dbAccessSecondScreen.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SecondScreen(navigate: NavController) {
-
-    // Delivery
-    val deliveryList = getDeliveryPlaces()
-    var selectedPlaceDelivery by remember {
-        mutableStateOf("")
-    }
-    var expanded by remember {
-        mutableStateOf(false)
-    }
-    val namePlaceDel = selectedPlaceDelivery
+fun AboutMerchandise(navigate: NavController) {
 
 
-    // Picking
-    val pickingList = getPickingPlaces()
-    var selectedPlacePicking by remember {
-        mutableStateOf("")
-    }
-    var expanded1 by remember {
-        mutableStateOf(false)
-    }
-    val namePlacePick = selectedPlacePicking
 
     //Number of packages
     var numberPackages by remember {
@@ -97,15 +78,14 @@ fun SecondScreen(navigate: NavController) {
                     )
                 }
                 FloatingActionButton(onClick = {
-                    if (selectedPlaceDelivery == "" || selectedPlacePicking == "" || numberPackages == "") {
+                    if ( numberPackages == "") {
                         Toast.makeText(
                             context,
                             R.string.toast_error,
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
-                        setDelivery(namePlaceDel)
-                        setPicking(namePlacePick)
+
                         setPackageNumber(numberPackages)
                         setPacking(picking)
                         navigate.navigate("thirdScreen")
@@ -122,123 +102,7 @@ fun SecondScreen(navigate: NavController) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(
-                text = stringResource(id = R.string.delivery),
-                fontSize = 15.sp,
-                fontFamily = FontFamily(
-                    Font(R.font.highspeed)
-                ),
-                modifier = Modifier.padding(top = 16.dp)
-            )
 
-            ExposedDropdownMenuBox(
-                expanded = expanded,
-                onExpandedChange = {
-                    expanded = !expanded
-                }
-            ) {
-                OutlinedTextField(
-                    value = selectedPlaceDelivery,
-                    onValueChange = { selectedPlaceDelivery = it },
-                    label = { Text(text = stringResource(id = R.string.label_delivery)) },
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(
-                            expanded = expanded
-                        )
-                    },
-                    colors = ExposedDropdownMenuDefaults.textFieldColors()
-                )
-
-                // filter options based on text field value
-                val filteringOptions =
-                    deliveryList.filter { it.contains(selectedPlaceDelivery, ignoreCase = true) }
-
-
-                if (filteringOptions.isNotEmpty()) {
-                    ExposedDropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false }
-                    ) {
-                        filteringOptions.forEach { selectionOption ->
-                            DropdownMenuItem(
-                                onClick = {
-                                    selectedPlaceDelivery = selectionOption
-                                    expanded = false
-                                }
-                            ) {
-                                Text(text = selectionOption)
-                            }
-                        }
-                    }
-                }
-
-            }
-
-            Text(
-                text = "Lugar de entrega: $namePlaceDel",
-                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
-            )
-
-            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
-
-            Text(
-                text = stringResource(id = R.string.picking),
-                fontSize = 15.sp,
-                fontFamily = FontFamily(
-                    Font(R.font.highspeed)
-                ),
-                modifier = Modifier.padding(top = 16.dp)
-            )
-
-            ExposedDropdownMenuBox(
-                expanded = expanded1,
-                onExpandedChange = {
-                    expanded1 = !expanded1
-                }
-            ) {
-                OutlinedTextField(
-                    value = selectedPlacePicking,
-                    onValueChange = { selectedPlacePicking = it },
-                    label = { Text(text = stringResource(id = R.string.label_picking)) },
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(
-                            expanded = expanded1
-                        )
-                    },
-                    colors = ExposedDropdownMenuDefaults.textFieldColors()
-                )
-
-                // filter options based on text field value
-                val filteringOptions =
-                    pickingList.filter { it.contains(selectedPlacePicking, ignoreCase = true) }
-
-
-                if (filteringOptions.isNotEmpty()) {
-                    ExposedDropdownMenu(
-                        expanded = expanded1,
-                        onDismissRequest = { expanded1 = false }
-                    ) {
-                        filteringOptions.forEach { selectionOption ->
-                            DropdownMenuItem(
-                                onClick = {
-                                    selectedPlacePicking = selectionOption
-                                    expanded1 = false
-                                }
-                            ) {
-                                Text(text = selectionOption)
-                            }
-                        }
-                    }
-                }
-
-            }
-
-            Text(
-                text = "Lugar de recogida: $namePlacePick",
-                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
-            )
-
-            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
             // Number of packages
             Text(

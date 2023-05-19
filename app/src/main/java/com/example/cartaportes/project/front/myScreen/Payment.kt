@@ -21,7 +21,7 @@ import com.example.cartaportes.project.back.dbAccessFourthScreen.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FourthScreen(navigate: NavController) {
+fun Payment(navigate: NavController) {
     // Vehicle
     val vehicleList = getVehicleList()
     var selectedVehicle by remember {

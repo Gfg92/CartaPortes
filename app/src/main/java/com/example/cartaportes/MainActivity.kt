@@ -8,8 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import com.example.cartaportes.project.navigation.NavigationScreen
+import com.example.cartaportes.project.navigation.NavigationController
 import com.example.cartaportes.ui.theme.CartaPortesTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    NavigationScreen()
+                    NavigationController()
                 }
             }
         }

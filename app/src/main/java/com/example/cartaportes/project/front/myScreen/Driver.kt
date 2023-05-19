@@ -29,7 +29,7 @@ import com.example.cartaportes.project.back.dbAccessThirdScreen.setTotalWeight
 
 
 @Composable
-fun ThirdScreen(navigate: NavController) {
+fun Driver(navigate: NavController) {
 
     // CheckBox
     val kindList = mutableListOf<String>()

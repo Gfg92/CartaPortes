@@ -28,7 +28,7 @@ import com.example.cartaportes.project.back.dbAccessFifthScreen.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FifthScreen(navigate: NavController) {
+fun Signature(navigate: NavController) {
 
     // Payer
     val payerList = getPayerList()
