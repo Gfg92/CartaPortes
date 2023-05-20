@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -24,7 +25,6 @@ import com.example.cartaportes.project.back.dbAccessSecondScreen.getDeliveryPlac
 import com.example.cartaportes.project.back.dbAccessSecondScreen.getPickingPlaces
 import com.example.cartaportes.project.back.dbAccessSecondScreen.setDelivery
 import com.example.cartaportes.project.back.dbAccessSecondScreen.setPicking
-
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -126,7 +126,7 @@ fun PersonalData(navigate: NavController) {
                     setConsignee(nameConsig, dniConsignee, addressConsignee)
                     setDelivery(namePlaceDel)
                     setPicking(namePlacePick)
-                    navigate.navigate("secondScreen")
+                    navigate.navigate("aboutMerchandiseScreen")
                 }
             }) {
                 Icon(
@@ -192,11 +192,11 @@ fun PersonalData(navigate: NavController) {
 
             Text(
                 text = "Nombre: $name\nDNI: $dniOperator\nDirección: $addressOperator\nPaís: $countryOperator",
-                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+                modifier = Modifier.padding(top = 16.dp)
             )
 
 
-            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
+            Divider(modifier = Modifier.padding(top = 5.dp))
 
             Text(
                 text = stringResource(id = R.string.consignee),
@@ -256,6 +256,7 @@ fun PersonalData(navigate: NavController) {
                 modifier = Modifier.padding(top = 16.dp)
             )
 
+            Divider(modifier = Modifier.padding(top = 5.dp))
 
             Text(
                 text = stringResource(id = R.string.delivery),
@@ -311,10 +312,10 @@ fun PersonalData(navigate: NavController) {
 
             Text(
                 text = "Lugar de entrega: $namePlaceDel",
-                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+                modifier = Modifier.padding(top = 16.dp)
             )
 
-            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
+            Divider(modifier = Modifier.padding(top = 5.dp))
 
             Text(
                 text = stringResource(id = R.string.picking),
@@ -372,10 +373,6 @@ fun PersonalData(navigate: NavController) {
                 text = "Lugar de recogida: $namePlacePick",
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
             )
-
-            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
-
-
         }
     }
 }

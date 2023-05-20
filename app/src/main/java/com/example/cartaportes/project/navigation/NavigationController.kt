@@ -14,14 +14,13 @@ import com.example.cartaportes.project.front.myScreen.*
 fun NavigationController(){
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "firstScreen") {
-        composable("login") { Login(navController) }
-        composable("firstScreen") { PersonalData(navController) }
-        composable("secondScreen") { AboutMerchandise(navController) }
-        composable("thirdScreen") { Driver(navController) }
-        composable("fourthScreen") { Payment(navController) }
-        composable("fifthScreen") { Signature(navController) }
-        composable("sixthScreen") { SixthScreen(navController) }
-        composable("seventhScreen") { SeventhScreen() }
+    NavHost(navController = navController, startDestination = "signatureScreen") {
+        composable("loginScreen") { Login(navController) }
+        composable("personalDataScreen") { PersonalData(navController) }
+        composable("aboutMerchandiseScreen") { AboutMerchandise(navController) }
+        composable("driverScreen") { Driver(navController) }
+        composable("paymentScreen") { Payment(navController) }
+        composable("signatureScreen") { Signature(navController) }
+        composable("dataSummaryScreen") { DataSummary() }
     }
 }

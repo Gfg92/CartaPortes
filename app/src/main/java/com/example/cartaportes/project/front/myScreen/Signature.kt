@@ -1,9 +1,17 @@
 package com.example.cartaportes.project.front.myScreen
 
+import android.view.MotionEvent
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -11,8 +19,11 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -24,55 +35,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
+import com.example.cartaportes.project.back.classes.Point
 import com.example.cartaportes.project.back.dbAccessFifthScreen.*
+import com.example.cartaportes.project.back.dbAccessSixthScreen.setSign
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun Signature(navigate: NavController) {
 
-    // Payer
-    val payerList = getPayerList()
-    var selectedpayer by remember {
-        mutableStateOf("")
-    }
-    var expanded by remember {
-        mutableStateOf(false)
-    }
-    val namePayment = selectedpayer
 
 
-    // CheckBox
-    var paidValue = ""
-    val checkedPaid = remember { mutableStateOf(false) }
-    val checkedDue = remember { mutableStateOf(false) }
-    if (checkedPaid.value == true) {
-        paidValue = stringResource(id = R.string.paid)
-        checkedDue.value = false
-    }
-    if (checkedDue.value == true) {
-        paidValue = stringResource(id = R.string.due)
-        checkedPaid.value = false
-    }
-
-    // Price
-    var price by remember {
-        mutableStateOf("")
-    }
-
-    // CheckBox2
-    var refund = ""
-    val checkedYes = remember { mutableStateOf(false) }
-    val checkedNo = remember { mutableStateOf(false) }
-    if (checkedYes.value == true) {
-        refund = stringResource(id = R.string.yes)
-        checkedNo.value = false
-    }
-    if (checkedNo.value == true) {
-        refund = stringResource(id = R.string.no)
-        checkedYes.value == false
-    }
-
-
+    // Sign
+    val points = remember { mutableStateListOf<Point>() }
+    val selectedColor by remember { mutableStateOf(Color.Black) }
 
     // FAB
     val context = LocalContext.current
@@ -80,42 +55,15 @@ fun Signature(navigate: NavController) {
     Scaffold(
         backgroundColor = Color(167, 181, 216, 255),
         floatingActionButton = {
-            Row() {
-                FloatingActionButton(
-                    onClick = {
-                        navigate.navigate("fourthScreen")
-                    },
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.KeyboardArrowLeft,
-                        contentDescription = stringResource(id = R.string.fab_back),
-                    )
-                }
-                FloatingActionButton(onClick = {
-                    if (namePayment == "" || refund == "") {
-                        Toast.makeText(
-                            context,
-                            R.string.toast_error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else if (checkedPaid.value == false && checkedDue.value == false) {
-                        Toast.makeText(
-                            context,
-                            R.string.toast_error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        setPayment(namePayment)
-                        setPaymentWay(paidValue, price)
-                        setRefund(refund)
-                        navigate.navigate("sixthScreen")
-                    }
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.KeyboardArrowRight,
-                        contentDescription = stringResource(id = R.string.fab_next)
-                    )
-                }
+            FloatingActionButton(
+                onClick = {
+                    navigate.navigate("paymentScreen")
+                },
+            ) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = stringResource(id = R.string.fab_back),
+                )
             }
         }, floatingActionButtonPosition = FabPosition.End
     ) {
@@ -123,7 +71,7 @@ fun Signature(navigate: NavController) {
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.method_of_payment),
+                text = stringResource(id = R.string.sign),
                 fontSize = 15.sp,
                 fontFamily = FontFamily(
                     Font(R.font.highspeed)
@@ -131,127 +79,82 @@ fun Signature(navigate: NavController) {
                 modifier = Modifier.padding(top = 16.dp)
             )
 
-            ExposedDropdownMenuBox(
-                expanded = expanded,
-                onExpandedChange = {
-                    expanded = !expanded
-                }
-            ) {
-                OutlinedTextField(
-                    value = selectedpayer,
-                    onValueChange = { selectedpayer = it },
-                    label = { Text(text = stringResource(id = R.string.payer)) },
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(
-                            expanded = expanded
-                        )
-                    },
-                    colors = ExposedDropdownMenuDefaults.textFieldColors()
-                )
 
-                // filter options based on text field value
-                val filteringOptions =
-                    payerList.filter { it.contains(selectedpayer, ignoreCase = true) }
-
-
-                if (filteringOptions.isNotEmpty()) {
-                    ExposedDropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false }
-                    ) {
-                        filteringOptions.forEach { selectionOption ->
-                            DropdownMenuItem(
-                                onClick = {
-                                    selectedpayer = selectionOption
-                                    expanded = false
-                                }
-                            ) {
-                                Text(text = selectionOption)
+            Canvas(
+                modifier = Modifier
+                    .size(width = 400.dp, height = 200.dp)
+                    .border(BorderStroke(1.dp, Color.Black))
+                    .background(Color.White)
+                    .pointerInteropFilter {
+                        when (it.actionMasked) {
+                            MotionEvent.ACTION_UP -> {
+                                points.add(Point(-1f, -1f, selectedColor))
+                                true
                             }
+                            MotionEvent.ACTION_MOVE -> {
+                                points.add(Point(it.x, it.y, selectedColor))
+                                true
+                            }
+                            MotionEvent.ACTION_DOWN -> {
+                                points.add(Point(it.x, it.y, selectedColor))
+                                true
+                            }
+                            else -> false
                         }
+                    }) {
+                var first = true
+                var startx = 0f
+                var starty = 0f
+                for (dot in points) {
+                    if (
+                        dot.x > this.size.width ||
+                        dot.y > this.size.height ||
+                        dot.x < 0 ||
+                        dot.y < 0
+                    ) {
+                        continue
                     }
+                    if (dot.x == -1f && dot.y == -1f) {
+                        first = true
+                    } else
+                        if (first) {
+                            startx = dot.x
+                            starty = dot.y
+                            first = false
+                        } else {
+                            drawLine(
+                                color = dot.color,
+                                start = Offset(x = startx, y = starty),
+                                end = Offset(x = dot.x, y = dot.y),
+                                strokeWidth = 10f
+                            )
+                            startx = dot.x
+                            starty = dot.y
+                        }
                 }
-
             }
-
-            Text(
-                text = "Pagador: $namePayment",
-                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
-            )
-
-            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
-
-            // CheckBox
-            Text(
-                text = stringResource(id = R.string.way_of_payment),
-                fontSize = 15.sp,
-                fontFamily = FontFamily(
-                    Font(R.font.highspeed)
-                ),
-                modifier = Modifier.padding(top = 16.dp)
-            )
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(
-                    checked = checkedPaid.value,
-                    onCheckedChange = { checkedPaid.value = it })
-                Text(text = stringResource(id = R.string.paid))
-
-                Checkbox(
-                    checked = checkedDue.value,
-                    onCheckedChange = { checkedDue.value = it })
-                Text(text = stringResource(id = R.string.due))
+            Row() {
+                Button(onClick = {
+                    points.clear()
+                }) {
+                    Text(text = stringResource(id = R.string.sign_clear), color = Color.White)
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Button(onClick = {
+                    if (points.size == 0){
+                        Toast.makeText(
+                            context,
+                            R.string.toast_error,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }else{
+                        setSign(points)
+                        navigate.navigate("dataSummaryScreen")
+                    }
+                }) {
+                    Text(text = stringResource(id = R.string.sign_send), color = Color.White)
+                }
             }
-            if (checkedDue.value == true){
-                Text(
-                    text = stringResource(id = R.string.total_price),
-                    fontSize = 15.sp,
-                    fontFamily = FontFamily(
-                        Font(R.font.highspeed)
-                    ),
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-                OutlinedTextField(
-                    value = price,
-                    onValueChange = { price = it },
-                    label = { Text(stringResource(id = R.string.price)) },
-                    textStyle = TextStyle(textAlign = TextAlign.End),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                )
-                Text(
-                    text = "Precio: $price €",
-                    modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
-                )
-            }
-
-            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
-
-            // CheckBox2
-            Text(
-                text = stringResource(id = R.string.reimbursement),
-                fontSize = 15.sp,
-                fontFamily = FontFamily(
-                    Font(R.font.highspeed)
-                ),
-                modifier = Modifier.padding(top = 16.dp)
-            )
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(
-                    checked = checkedYes.value,
-                    onCheckedChange = { checkedYes.value = it })
-                Text(text = stringResource(id = R.string.yes))
-
-                Checkbox(
-                    checked = checkedNo.value,
-                    onCheckedChange = { checkedNo.value = it })
-                Text(text = stringResource(id = R.string.no))
-            }
-
-            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
-
-
-
-
-
         }
     }
 }

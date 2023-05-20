@@ -22,7 +22,7 @@ import com.example.cartaportes.project.back.classes.Point
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun SeventhScreen() {
+fun DataSummary() {
     // Operator
     val name = remember {
         mutableStateOf("")

@@ -26,16 +26,21 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
 import com.example.cartaportes.project.back.dbAccessSecondScreen.*
+import com.example.cartaportes.project.back.dbAccessThirdScreen.setNatureKind
+import com.example.cartaportes.project.back.dbAccessThirdScreen.setTotalWeight
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AboutMerchandise(navigate: NavController) {
 
-
-
     //Number of packages
     var numberPackages by remember {
+        mutableStateOf("")
+    }
+
+    //Weight packages
+    var weightPackages by remember {
         mutableStateOf("")
     }
 
@@ -60,6 +65,29 @@ fun AboutMerchandise(navigate: NavController) {
         checkedSecondary.value = false
     }
 
+    // CheckBox
+    val kindList = mutableListOf<String>()
+    val checkedPerishable = remember { mutableStateOf(false) }
+    val checkedNotPerishable = remember { mutableStateOf(false) }
+    val checkedFragile = remember { mutableStateOf(false) }
+    val checkedDangerous = remember { mutableStateOf(false) }
+    val checkedDimensional = remember { mutableStateOf(false) }
+    if (checkedPerishable.value == true) {
+        kindList.add(stringResource(id = R.string.check_perishable))
+    }
+    if (checkedNotPerishable.value == true) {
+        kindList.add(stringResource(id = R.string.check_not_perishable))
+    }
+    if (checkedFragile.value == true) {
+        kindList.add(stringResource(id = R.string.check_fragile))
+    }
+    if (checkedDangerous.value == true) {
+        kindList.add(stringResource(id = R.string.check_dangerous))
+    }
+    if (checkedDimensional.value == true) {
+        kindList.add(stringResource(id = R.string.check_dimensional))
+    }
+
     // FAB
     val context = LocalContext.current
 
@@ -69,7 +97,7 @@ fun AboutMerchandise(navigate: NavController) {
             Row() {
                 FloatingActionButton(
                     onClick = {
-                        navigate.navigate("firstScreen")
+                        navigate.navigate("personalDataScreen")
                     },
                 ) {
                     Icon(
@@ -78,17 +106,18 @@ fun AboutMerchandise(navigate: NavController) {
                     )
                 }
                 FloatingActionButton(onClick = {
-                    if ( numberPackages == "") {
+                    if ( numberPackages == "" || weightPackages == "") {
                         Toast.makeText(
                             context,
                             R.string.toast_error,
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
-
                         setPackageNumber(numberPackages)
+                        setTotalWeight(weightPackages)
                         setPacking(picking)
-                        navigate.navigate("thirdScreen")
+                        setNatureKind(kindList)
+                        navigate.navigate("driverScreen")
                     }
                 }) {
                     Icon(
@@ -102,8 +131,6 @@ fun AboutMerchandise(navigate: NavController) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-
-
             // Number of packages
             Text(
                 text = stringResource(id = R.string.number_packages),
@@ -122,11 +149,34 @@ fun AboutMerchandise(navigate: NavController) {
             )
             Text(
                 text = "Número de bultos: $numberPackages",
-                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+                modifier = Modifier.padding(top = 16.dp)
             )
 
-            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
+            Divider(modifier = Modifier.padding(top = 5.dp))
 
+
+            // Weight Packages
+            Text(
+                text = stringResource(id = R.string.total_weight),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            OutlinedTextField(
+                value = weightPackages,
+                onValueChange = { weightPackages = it },
+                label = { Text(stringResource(id = R.string.amount)) },
+                textStyle = TextStyle(textAlign = TextAlign.End),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            )
+            Text(
+                text = "Peso: $weightPackages kgs",
+                modifier = Modifier.padding(top = 16.dp)
+            )
+
+            Divider(modifier = Modifier.padding(top = 5.dp))
 
             // CheckBox
             Text(
@@ -150,6 +200,46 @@ fun AboutMerchandise(navigate: NavController) {
                     checked = checkedTertiary.value,
                     onCheckedChange = { checkedTertiary.value = it })
                 Text(text = stringResource(id = R.string.check_tertiary))
+            }
+
+            // CheckBox
+            Text(
+                text = stringResource(id = R.string.check_nature_title),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = checkedPerishable.value,
+                    onCheckedChange = { checkedPerishable.value = it })
+                Text(text = stringResource(id = R.string.check_perishable))
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = checkedNotPerishable.value,
+                    onCheckedChange = { checkedNotPerishable.value = it })
+                Text(text = stringResource(id = R.string.check_not_perishable))
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = checkedFragile.value,
+                    onCheckedChange = { checkedFragile.value = it })
+                Text(text = stringResource(id = R.string.check_fragile))
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = checkedDangerous.value,
+                    onCheckedChange = { checkedDangerous.value = it })
+                Text(text = stringResource(id = R.string.check_dangerous))
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = checkedDimensional.value,
+                    onCheckedChange = { checkedDimensional.value = it })
+                Text(text = stringResource(id = R.string.check_dimensional))
             }
 
 

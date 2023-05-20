@@ -24,41 +24,48 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
+import com.example.cartaportes.project.back.dbAccessFourthScreen.getDriverList
+import com.example.cartaportes.project.back.dbAccessFourthScreen.getTrailerList
+import com.example.cartaportes.project.back.dbAccessFourthScreen.getVehicleList
+import com.example.cartaportes.project.back.dbAccessFourthScreen.setDriverName
+import com.example.cartaportes.project.back.dbAccessFourthScreen.setLicensePlate
+import com.example.cartaportes.project.back.dbAccessFourthScreen.setTrailerLicense
 import com.example.cartaportes.project.back.dbAccessThirdScreen.setNatureKind
 import com.example.cartaportes.project.back.dbAccessThirdScreen.setTotalWeight
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Driver(navigate: NavController) {
-
-    // CheckBox
-    val kindList = mutableListOf<String>()
-    val checkedPerishable = remember { mutableStateOf(false) }
-    val checkedNotPerishable = remember { mutableStateOf(false) }
-    val checkedFragile = remember { mutableStateOf(false) }
-    val checkedDangerous = remember { mutableStateOf(false) }
-    val checkedDimensional = remember { mutableStateOf(false) }
-    if (checkedPerishable.value == true) {
-        kindList.add(stringResource(id = R.string.check_perishable))
+    // Vehicle
+    val vehicleList = getVehicleList()
+    var selectedVehicle by remember {
+        mutableStateOf("")
     }
-    if (checkedNotPerishable.value == true) {
-        kindList.add(stringResource(id = R.string.check_not_perishable))
-    }
-    if (checkedFragile.value == true) {
-        kindList.add(stringResource(id = R.string.check_fragile))
-    }
-    if (checkedDangerous.value == true) {
-        kindList.add(stringResource(id = R.string.check_dangerous))
-    }
-    if (checkedDimensional.value == true) {
-        kindList.add(stringResource(id = R.string.check_dimensional))
+    val nameVehicle = selectedVehicle
+    var expandedVehicle by remember {
+        mutableStateOf(false)
     }
 
-    //Weight packages
-    var weightPackages by remember {
+    // Trailer
+    val trailerList = getTrailerList()
+    var selectedTrailer by remember {
         mutableStateOf("")
     }
 
+    var expandedTrailer by remember {
+        mutableStateOf(false)
+    }
+
+    // Driver name
+    val driverList = getDriverList()
+    var selectedDriver by remember {
+        mutableStateOf("")
+    }
+
+    var expandedDriver by remember {
+        mutableStateOf(false)
+    }
     // FAB
     val context = LocalContext.current
 
@@ -68,7 +75,7 @@ fun Driver(navigate: NavController) {
             Row() {
                 FloatingActionButton(
                     onClick = {
-                        navigate.navigate("secondScreen")
+                        navigate.navigate("aboutMerchandiseScreen")
                     },
                 ) {
                     Icon(
@@ -77,17 +84,20 @@ fun Driver(navigate: NavController) {
                     )
                 }
                 FloatingActionButton(onClick = {
-                    if (weightPackages == "") {
+                    if (selectedVehicle == "" || selectedTrailer == "" || selectedDriver == ""){
                         Toast.makeText(
                             context,
                             R.string.toast_error,
                             Toast.LENGTH_SHORT
                         ).show()
-                    } else {
-                        setNatureKind(kindList)
-                        setTotalWeight(weightPackages)
-                        navigate.navigate("fourthScreen")
+                    }else{
+                        setLicensePlate(selectedVehicle)
+                        setTrailerLicense(selectedTrailer)
+                        setDriverName(selectedDriver)
+                        navigate.navigate("paymentScreen")
                     }
+
+
                 }) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowRight,
@@ -100,68 +110,181 @@ fun Driver(navigate: NavController) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            // CheckBox
+
             Text(
-                text = stringResource(id = R.string.check_nature_title),
+                text = stringResource(id = R.string.driver),
                 fontSize = 15.sp,
                 fontFamily = FontFamily(
                     Font(R.font.highspeed)
                 ),
                 modifier = Modifier.padding(top = 16.dp)
             )
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(
-                    checked = checkedPerishable.value,
-                    onCheckedChange = { checkedPerishable.value = it })
-                Text(text = stringResource(id = R.string.check_perishable))
+
+            ExposedDropdownMenuBox(
+                expanded = expandedDriver,
+                onExpandedChange = {
+                    expandedDriver = !expandedDriver
+                }
+            ) {
+                OutlinedTextField(
+                    value = selectedDriver,
+                    onValueChange = { selectedDriver = it },
+                    label = { Text(text = stringResource(id = R.string.name_selected)) },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(
+                            expanded = expandedDriver
+                        )
+                    },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors()
+                )
+
+                // filter options based on text field value
+                val filteringOptions =
+                    driverList.filter { it.contains(selectedDriver, ignoreCase = true) }
+
+
+                if (filteringOptions.isNotEmpty()) {
+                    ExposedDropdownMenu(
+                        expanded = expandedDriver,
+                        onDismissRequest = { expandedDriver = false }
+                    ) {
+                        filteringOptions.forEach { selectionOption ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    selectedDriver = selectionOption
+                                    expandedDriver = false
+                                }
+                            ) {
+                                Text(text = selectionOption)
+                            }
+                        }
+                    }
+                }
             }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(
-                    checked = checkedNotPerishable.value,
-                    onCheckedChange = { checkedNotPerishable.value = it })
-                Text(text = stringResource(id = R.string.check_not_perishable))
-            }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(
-                    checked = checkedFragile.value,
-                    onCheckedChange = { checkedFragile.value = it })
-                Text(text = stringResource(id = R.string.check_fragile))
-            }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(
-                    checked = checkedDangerous.value,
-                    onCheckedChange = { checkedDangerous.value = it })
-                Text(text = stringResource(id = R.string.check_dangerous))
-            }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(
-                    checked = checkedDimensional.value,
-                    onCheckedChange = { checkedDimensional.value = it })
-                Text(text = stringResource(id = R.string.check_dimensional))
-            }
+            Text(
+                text = "Nombre: $selectedDriver",
+                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+            )
 
             Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
-            // Weight Packages
+            // Vehicle
             Text(
-                text = stringResource(id = R.string.total_weight),
+                text = stringResource(id = R.string.vehicle),
                 fontSize = 15.sp,
                 fontFamily = FontFamily(
                     Font(R.font.highspeed)
                 ),
                 modifier = Modifier.padding(top = 16.dp)
             )
-            OutlinedTextField(
-                value = weightPackages,
-                onValueChange = { weightPackages = it },
-                label = { Text(stringResource(id = R.string.amount)) },
-                textStyle = TextStyle(textAlign = TextAlign.End),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            )
+            ExposedDropdownMenuBox(
+                expanded = expandedVehicle,
+                onExpandedChange = {
+                    expandedVehicle = !expandedVehicle
+                }
+            ) {
+                OutlinedTextField(
+                    value = selectedVehicle,
+                    onValueChange = { selectedVehicle = it },
+                    label = { Text(text = stringResource(id = R.string.registration_number)) },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(
+                            expanded = expandedVehicle
+                        )
+                    },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors()
+                )
+
+                // filter options based on text field value
+                val filteringOptions =
+                    vehicleList.filter { it.contains(selectedVehicle, ignoreCase = true) }
+
+                if (filteringOptions.isNotEmpty()) {
+                    ExposedDropdownMenu(
+                        expanded = expandedVehicle,
+                        onDismissRequest = { expandedVehicle = false }
+                    ) {
+                        filteringOptions.forEach { selectionOption ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    selectedVehicle = selectionOption
+                                    expandedVehicle = false
+                                }
+                            ) {
+                                Text(text = selectionOption)
+                            }
+                        }
+                    }
+                }
+
+            }
+
             Text(
-                text = "Peso: $weightPackages kgs",
+                text = "Matrícula: $nameVehicle",
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
             )
+
+            Divider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
+
+            Text(
+                text = stringResource(id = R.string.trailer_license),
+                fontSize = 15.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.highspeed)
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+
+            ExposedDropdownMenuBox(
+                expanded = expandedTrailer,
+                onExpandedChange = {
+                    expandedTrailer = !expandedTrailer
+                }
+            ) {
+                OutlinedTextField(
+                    value = selectedTrailer,
+                    onValueChange = { selectedTrailer = it },
+                    label = { Text(text = stringResource(id = R.string.trailer_selected)) },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(
+                            expanded = expandedTrailer
+                        )
+                    },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors()
+                )
+
+                // filter options based on text field value
+                val filteringOptions =
+                    trailerList.filter { it.contains(selectedTrailer, ignoreCase = true) }
+
+
+                if (filteringOptions.isNotEmpty()) {
+                    ExposedDropdownMenu(
+                        expanded = expandedTrailer,
+                        onDismissRequest = { expandedTrailer = false }
+                    ) {
+                        filteringOptions.forEach { selectionOption ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    selectedTrailer = selectionOption
+                                    expandedTrailer = false
+                                }
+                            ) {
+                                Text(text = selectionOption)
+                            }
+                        }
+                    }
+                }
+
+            }
+            Text(
+                text = "Matrícula: $selectedTrailer",
+                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+            )
+
+
+
+
 
 
         }
