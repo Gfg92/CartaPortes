@@ -4,34 +4,27 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
-import com.example.cartaportes.project.back.dbAccessFourthScreen.getDriverList
-import com.example.cartaportes.project.back.dbAccessFourthScreen.getTrailerList
-import com.example.cartaportes.project.back.dbAccessFourthScreen.getVehicleList
-import com.example.cartaportes.project.back.dbAccessFourthScreen.setDriverName
-import com.example.cartaportes.project.back.dbAccessFourthScreen.setLicensePlate
-import com.example.cartaportes.project.back.dbAccessFourthScreen.setTrailerLicense
-import com.example.cartaportes.project.back.dbAccessThirdScreen.setNatureKind
-import com.example.cartaportes.project.back.dbAccessThirdScreen.setTotalWeight
+import com.example.cartaportes.project.back.getters.getDriverList
+import com.example.cartaportes.project.back.getters.getTrailerList
+import com.example.cartaportes.project.back.getters.getVehicleList
+import com.example.cartaportes.project.back.setters.setDriverName
+import com.example.cartaportes.project.back.setters.setLicensePlate
+import com.example.cartaportes.project.back.setters.setTrailerLicense
 
 
 @OptIn(ExperimentalMaterialApi::class)

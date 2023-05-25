@@ -27,12 +27,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
-import com.example.cartaportes.project.back.dbAccessFifthScreen.getPayerList
-import com.example.cartaportes.project.back.dbAccessFifthScreen.setPayment
-import com.example.cartaportes.project.back.dbAccessFifthScreen.setPaymentWay
-import com.example.cartaportes.project.back.dbAccessFifthScreen.setRefund
-import com.example.cartaportes.project.back.dbAccessFourthScreen.*
-import com.example.cartaportes.project.back.dbAccessSixthScreen.setDate
+import com.example.cartaportes.project.back.getters.getPayerList
+import com.example.cartaportes.project.back.setters.setDate
+import com.example.cartaportes.project.back.setters.setPayment
+import com.example.cartaportes.project.back.setters.setPaymentWay
+import com.example.cartaportes.project.back.setters.setRefund
 import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.N)
@@ -113,7 +112,6 @@ fun Payment(navigate: NavController) {
             Row() {
                 FloatingActionButton(
                     onClick = {
-                        setDate(mDate.value)
                         navigate.navigate("driverScreen")
                     },
                 ) {
@@ -139,6 +137,7 @@ fun Payment(navigate: NavController) {
                         setPayment(namePayment)
                         setPaymentWay(paidValue, price)
                         setRefund(refund)
+                        setDate(mDate.value)
                         navigate.navigate("signatureScreen")
                     }
                 }) {

@@ -15,8 +15,33 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cartaportes.R
-import com.example.cartaportes.project.back.dbAccessSeventhScreen.*
-import com.example.cartaportes.project.back.classes.Point
+import com.example.cartaportes.project.back.generatePDF.generatePDF
+import com.example.cartaportes.project.back.generatePDF.getDirectory
+import com.example.cartaportes.project.back.generatePDF.requestForegroundPermission
+import com.example.cartaportes.project.back.getters.getConsigneeAddress
+import com.example.cartaportes.project.back.getters.getConsigneeDni
+import com.example.cartaportes.project.back.getters.getConsigneeName
+import com.example.cartaportes.project.back.getters.getDate
+import com.example.cartaportes.project.back.getters.getDelivery
+import com.example.cartaportes.project.back.getters.getDriverName
+import com.example.cartaportes.project.back.getters.getLicense
+import com.example.cartaportes.project.back.getters.getOperatorAddress
+import com.example.cartaportes.project.back.getters.getOperatorCountry
+import com.example.cartaportes.project.back.getters.getOperatorDni
+import com.example.cartaportes.project.back.getters.getOperatorName
+import com.example.cartaportes.project.back.getters.getPackage
+import com.example.cartaportes.project.back.getters.getPackageKind
+import com.example.cartaportes.project.back.getters.getPacking
+import com.example.cartaportes.project.back.getters.getPayment
+import com.example.cartaportes.project.back.getters.getPaymentKind
+import com.example.cartaportes.project.back.getters.getPicking
+import com.example.cartaportes.project.back.getters.getPrice
+import com.example.cartaportes.project.back.getters.getRefund
+import com.example.cartaportes.project.back.getters.getSign
+import com.example.cartaportes.project.back.getters.getTotalWeight
+import com.example.cartaportes.project.back.getters.getTrailerLicense
+import com.example.cartaportes.project.back.setters.clearDataBase
+import com.example.cartaportes.project.classes.Point
 
 
 
@@ -374,6 +399,7 @@ fun DataSummary() {
                     date.value,
                     points.value
                 )
+                clearDataBase()
                 System.exit(-1)
 
             }, modifier = Modifier.fillMaxWidth()) {

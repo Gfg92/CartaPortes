@@ -1,4 +1,4 @@
-package com.example.cartaportes.project.back.classes
+package com.example.cartaportes.project.classes
 
 import androidx.compose.ui.graphics.Color
 

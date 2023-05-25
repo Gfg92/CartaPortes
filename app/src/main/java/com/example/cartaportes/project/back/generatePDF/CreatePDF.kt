@@ -1,4 +1,4 @@
-package com.example.cartaportes.project.back.dbAccessSeventhScreen
+package com.example.cartaportes.project.back.generatePDF
 
 import android.Manifest
 import android.app.Activity
@@ -17,7 +17,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.cartaportes.R
-import com.example.cartaportes.project.back.classes.Point
+import com.example.cartaportes.project.classes.Point
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException

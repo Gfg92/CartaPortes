@@ -15,16 +15,20 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
-import com.example.cartaportes.project.back.dbAccessFirstScreen.*
-import com.example.cartaportes.project.back.dbAccessSecondScreen.getDeliveryPlaces
-import com.example.cartaportes.project.back.dbAccessSecondScreen.getPickingPlaces
-import com.example.cartaportes.project.back.dbAccessSecondScreen.setDelivery
-import com.example.cartaportes.project.back.dbAccessSecondScreen.setPicking
+import com.example.cartaportes.project.back.getters.getConsigList
+import com.example.cartaportes.project.back.getters.getDeliveryPlaces
+import com.example.cartaportes.project.back.getters.getNameConsigList
+import com.example.cartaportes.project.back.getters.getNameList
+import com.example.cartaportes.project.back.getters.getPickingPlaces
+import com.example.cartaportes.project.back.getters.getUserList
+import com.example.cartaportes.project.back.setters.setConsignee
+import com.example.cartaportes.project.back.setters.setDelivery
+import com.example.cartaportes.project.back.setters.setOperator
+import com.example.cartaportes.project.back.setters.setPicking
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable

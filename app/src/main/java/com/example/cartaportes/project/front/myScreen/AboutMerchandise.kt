@@ -25,9 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
-import com.example.cartaportes.project.back.dbAccessSecondScreen.*
-import com.example.cartaportes.project.back.dbAccessThirdScreen.setNatureKind
-import com.example.cartaportes.project.back.dbAccessThirdScreen.setTotalWeight
+import com.example.cartaportes.project.back.setters.setNatureKind
+import com.example.cartaportes.project.back.setters.setPackageNumber
+import com.example.cartaportes.project.back.setters.setPacking
+import com.example.cartaportes.project.back.setters.setTotalWeight
 
 
 @OptIn(ExperimentalMaterialApi::class)

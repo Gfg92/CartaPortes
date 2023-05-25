@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cartaportes.R
-import com.example.cartaportes.project.back.dbAccessLoginScreen.loginAccess
+import com.example.cartaportes.project.back.loginDB.loginAccess
 
 
 @Composable
